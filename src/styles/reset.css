@@ -1,0 +1,116 @@
+/*
+ * CSS Reset
+ */
+
+html {
+    /* Make the width and height calculations more predictable. */
+    box-sizing: border-box;
+    /* Reserve the space for a vertical scrollbar if it does not show preventing layout shifts */
+    scrollbar-gutter: stable;
+}
+
+/* Check browser accessibility settings */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        /*
+         * Only apply this property when the user has not applied reduced motion.
+         * Sets the in-page scrolling to animate smoothly instead of jumping instantly.
+         * e.g. when anchor links are clicked.
+         */
+        scroll-behavior: smooth;
+    }
+}
+
+/* Check the browser accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        /* 
+         * Only use instant scrolling instead of animated scrolling.
+         * Applied if the accessibility settings are set to: reduce.
+         * e.g. when anchor links are clicked.
+         */
+        scroll-behavior: auto;
+    }
+}
+
+/* 
+ * The universal selector applies styling to all elements.
+ * Also explicitly targets ::before and ::after.
+ */
+*, *::before, *::after {
+    /* Inherit the property settings from the parent element. */
+    box-sizing: inherit;
+}
+
+body {
+    /*
+     * Remove the default margin.
+     * The body element usually has no default padding.
+     */
+    margin: 0;
+    /*
+     * The line height is set to improve readability for normal text.
+     * Provides a baseline across the site.
+     * Is a unitless value as this scales better with different font sizes and inherits cleanly.
+     * This value can be overidden for headings and specific components or elements.
+     */
+    line-height: 1.5;
+    /* Fallback for browsers that do not support modern dvh units. */
+    min-height: 100vh;
+    /* 
+     * Default to using the dvh unit unless it's not supported by the browser.
+     * Avoids content being hidden behind UI elements, such as toolbars. 
+     */
+    min-height: 100dvh;
+}
+
+/*
+ * Explicit block display for semantic HTML elements.
+ * This is not strictly needed for modern browsers, but provides support for legacy browsers.
+ */
+article, aside, details, figcaption, footer, header,
+main, menu, nav, section {
+    display: block;
+}
+
+input, button, textarea, select {
+    /*
+     * Inherits the font settings from the parent element.
+     * Avoids inconsistency with the browser-default form styling.
+     * Inherits: font-family, font-size, font-weight and line-height properties.
+     */
+    font: inherit;
+    /* Inherit the color from the parent element. */
+    color: inherit;
+}
+
+table {
+    /* Makes adjacent table cell borders merge into a single border */
+    border-collapse: collapse;
+}
+
+img, picture, video {
+    /*
+     * Set images and media to be block elements, by default, these are usually inline-block.
+     * Removes a small inline gap that can appear underneath images.
+     * Allows spacing and alignment to be easier to control.
+     */
+    display: block;
+    /*
+     * Prevents the element from becoming wider than its parent and overflowing its container.
+     * Large images and media will reduce to fit within smaller containers.
+     * Allows images and media to be responsive.
+     */
+    max-width: 100%;
+}
+
+img, video {
+    /*
+     * Tells the broser to calculate the height automatically based on the element's width.
+     * The height will be calculated also based on the original aspect ratio.
+     * If the width reduces, the height shrinks proportionally.
+     * Prevents stretching and squashing of the image or video.
+     * Allows images and videos to be responsive.
+     */
+    height: auto;
+}

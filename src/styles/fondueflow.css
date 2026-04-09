@@ -5,6 +5,8 @@
  * Run the Bun build script in the package.json file: $ npm run build:css
  */
 
+/* Reset (Optional, remove if not needed) */
+@import "./reset.css";
 /* Base styles for elements */
 @import "./base.css";
 /* Responsive 12-column grid to create layouts */
