@@ -39,3 +39,34 @@ Boilerplate code framework for the Webflow website.
     </div>
 </section>
 ```
+
+## Card
+
+```html
+<section class="ff-section">
+    <div class="ff-container">
+        <!-- Component: Card -->
+        <div class="ff-card-container">
+            <div class="ff-card">
+                <div class="ff-card__content">
+                    <p>This is a card.</p>
+                    <p>This is a card.</p>
+                    <p>This is a card.</p>
+                    <p>This is a card.</p>
+                </div>
+            </div>
+            <div class="ff-card">
+                <div class="ff-card__content">
+                    This is a second card.
+                </div>
+            </div>
+            <div class="ff-card">
+                <div class="ff-card__content">
+                    This is a second card.
+                </div>
+            </div>
+        </div>
+        <!-- / END: Component: Card -->
+    </div>
+</section>
+```

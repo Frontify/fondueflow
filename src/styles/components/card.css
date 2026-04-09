@@ -1,0 +1,44 @@
+:root {
+    /* Spacing between each card */
+    --card-grid-gap: 1rem;
+    /* 
+     * The minimum width of each card.
+     * Cards will not shrink below this width value. 
+     */
+    --card-min-width: 16rem;
+}
+
+/* The container that manages the cards to make them responsive and equal height. */
+.ff-card-container {
+    /* Turn the container into a grid layout using CSS Grid. */
+    display: grid;
+    /* 
+     * Define the grid columns.
+     * repeat(...): repeats the column pattern.
+     * auto-fit: creates as many columns as can fit into the available space.
+     * Allows items to wrap onto new rows as the container narrows in width.
+     * minmax(..., 1fr): each column has a minimum width and a maximum width of 1fr, meaning it can grow to share space equally with other columns.
+     * min(100%, var(--card-min-width)): the minimum width is the smaller of: 100% the container, or var(--card-min-width), such as 16rem.
+     * On small screens, the cards are allows to shrink to 100% of the container and avoid overflowing.
+     */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min-width)), 1fr));
+    /* Adds vertical spacing between each grid item and card. */
+    gap: var(--card-grid-gap);
+    /* 
+     * Make the grid items stretch to fill the row height.
+     * This helps to ensure the cards have equal heights.
+     */
+    align-items: stretch;
+}
+
+/* Styling for each individual card. */
+.ff-card {
+    /* The height of the card should be the full height of the parent container. */
+    height: 100%;
+}
+
+/* Container for the content within the card. */
+.ff-card__content {
+    /* Allow card content to become shorter than the content's natural length. */
+    min-height: 0;
+}

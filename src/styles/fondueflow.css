@@ -8,4 +8,7 @@
 /* Base styles for elements */
 @import "./base.css";
 /* Responsive 12-column grid to create layouts */
-@import "./grid.css";
+@import "./layout/grid.css";
+
+/* Components */
+@import "./components/card.css";
