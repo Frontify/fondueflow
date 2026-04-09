@@ -1,3 +1,77 @@
-.body {
-    color: #000;
+:root {
+    /*
+     * Set the vertical spacing/padding within a section element.
+     * The section is never smaller than 1rem, grows with the viewport width and never larger than 2rem.
+     * Small screens avoid huge spacing.
+     * Large screens do not feel cramped.
+     * Define spacing logic only once inside a single property.
+     */
+    --section-space: clamp(1rem, 8vw, 2rem);
+    /* The maximum width of the container. */
+    --container-max-width: 1600px;
+}
+
+/* Apply class to each section element. */
+.ff-section {
+    /* The padding-block property adds vertical padding to the top and bottom. */
+    padding-block: var(--section-space);
+}
+
+/* Content container. */
+.ff-container {
+    /*
+     * Allow the container to shrink naturally on small screens and remain responsive.
+     * The outer edge is consistent as the padding and max-width are baked in.
+     * 100% - 2rem: keeps 1rem of space on each side of the container for smaller screen sizes.
+     * var(--container-max-width): prevents the container from getting too wide on larger screens.
+     * Fallback value of 1240px provided if no variable value is provided for the container width.
+     * min(...): selects the smaller of the two values.
+     * This helps to avoid needing separate horizontal padding on the container and keeps the gutter consistent.
+     */
+    width: min(100% - 2rem, var(--container-max-width, 1240px));
+    /* Center the container horizontally. */
+    margin-inline: auto;
+}
+
+/* Heading tags */
+h1, h2, h3, h4, h5, h6 {
+    /* Avoid line breaks when headings break onto multiple lines. */
+    text-wrap: balance;
+    /* Break long words or unbroken strings so they do not overflow their parent container. */
+    overflow-wrap: break-word;
+}
+
+/* Paragraph tags */
+p {
+    /* Break long words or unbroken strings so they do not overflow their parent container. */
+    overflow-wrap: break-word;
+    /* Aim for a readable, natural-looking text block with line breaks. */
+    text-wrap: pretty;
+}
+
+li, figcaption {
+    /* Aim for a readable, natural-looking text block with line breaks. */
+    text-wrap: pretty;
+}
+
+/* Links */
+a {
+    /* Default underline set for links (not strictly needed, but added anyway). */
+    text-decoration: underline;
+}
+
+/* Links: Hover */
+a:hover {
+    /* Remove underline when user hovers over a link, as default behavior. */
+    text-decoration: none;
+}
+
+/* Apply class to button elements */
+.ff-button {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    /* Inherit all font properties from the parent element. */
+    font: inherit;
 }

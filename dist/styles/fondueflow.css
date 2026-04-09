@@ -1,1 +1,1 @@
-.body{color:#000}
+:root{--section-space:clamp(1rem,8vw,2rem);--container-max-width:1600px}.ff-section{padding-block:var(--section-space)}.ff-container{width:min(100% - 2rem,var(--container-max-width,1240px));margin-inline-start:auto;margin-inline-end:auto}h1,h2,h3,h4,h5,h6{text-wrap:balance;overflow-wrap:break-word}p{overflow-wrap:break-word;text-wrap:pretty}li,figcaption{text-wrap:pretty}a{text-decoration:underline}a:hover{text-decoration:none}.ff-button{display:inline-block;cursor:pointer;text-decoration:none;text-align:center;font:inherit}
