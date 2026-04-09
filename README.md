@@ -40,7 +40,25 @@ Boilerplate code framework for the Webflow website.
 </section>
 ```
 
-## Card
+## Flow
+
+```html
+<section class="ff-section">
+    <div class="ff-container">
+        <div class="ff-flow">
+            <h1>Welcome</h1>
+            <p>This is a simple paragraph within the .ff-flow element.</p>
+            <p>Notice the margin is added to the paragraph elements but not the heading, the first element.</p>
+            <p>This provides equal spacing within a container.</p>
+            <a href="#">See more</a>
+        </div>
+    </div>
+</section>
+```
+
+## Components
+
+### Card
 
 ```html
 <section class="ff-section">

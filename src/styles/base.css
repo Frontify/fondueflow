@@ -58,12 +58,33 @@ li, figcaption {
 a {
     /* Default underline set for links (not strictly needed, but added anyway). */
     text-decoration: underline;
+    /* Ensure the default cursor pointer is applied. */
+    cursor: pointer;
 }
 
 /* Links: Hover */
 a:hover {
     /* Remove underline when user hovers over a link, as default behavior. */
     text-decoration: none;
+}
+
+/* 
+ * Vertical spacing pattern for content inside of an element.
+ * Select every direct child (*).
+ * The first child inside the element that has this class will not have the styling applied.
+ */
+.ff-flow > * + * {
+    /* 
+     * Apply a top margin to all items inside a container with this class applied, except for the first child. 
+     * Provides spacing between all items except for the first child element.
+     */
+    margin-top: var(--flow-space, 1rem);
+}
+
+/* Apply styles to elements that match the ones listed within the .ff-flow class */
+.ff-flow :where(h1, h2, h3, h4, h5, h6) {
+    /* Remove default margin from headings inside of the element with this class. */
+    margin: 0;
 }
 
 /* Apply class to button elements */
