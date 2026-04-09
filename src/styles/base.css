@@ -8,7 +8,7 @@
      */
     --section-space: clamp(1rem, 8vw, 2rem);
     /* The maximum width of the container. */
-    --container-max-width: 1600px;
+    --container-max-width: 1240px;
 }
 
 /* Apply class to each section element. */
