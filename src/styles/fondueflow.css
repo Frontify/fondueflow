@@ -1,1 +1,11 @@
+/*
+ * Import any CSS stylesheets within the src directory here.
+ * All @import will be included within the optimised CSS stylesheet.
+ * The optimised, minimised CSS stylesheet can be found in the dist/ directory: dist/styles/fondueflow.css.
+ * Run the Bun build script in the package.json file: $ npm run build:css
+ */
+
+/* Base styles for elements */
 @import "./base.css";
+/* Responsive 12-column grid to create layouts */
+@import "./grid.css";

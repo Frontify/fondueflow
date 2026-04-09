@@ -1,0 +1,105 @@
+:root {
+    /* Set the number of default columns in the grid that are equal-width. */
+    --grid-columns: 12;
+    /* Set the size of the gap between each of the columns. */
+    --grid-gap: 1rem;
+}
+
+.ff-row {
+    /* Turn the element into a grid container using CSS Grid. */
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    /* Set the gap between each of the vertical columns. */
+    gap: var(--grid-gap);
+    /* Add space below each row, equal to the same column gap value. */
+    margin-bottom: var(--grid-gap);
+}
+
+/*
+ * Target any element that have the .ff-col or .ff-col- classes applied.
+ * Default to full width.
+ * On small screens: each elements with .ff-col or .ff-col- classes are full width and responsive.
+ * On large screens: other rules can reduce the span so items can sit side by side.
+ */
+.ff-col,
+[class^=" ff-col-"],
+[class*=" ff-col-"] {
+    grid-column: auto / span 12;
+}
+
+/* 
+ * Mobile classes.
+ * Is mobile-first, so this is the default sizing for each column class.
+ */
+.ff-col-1 { grid-column: auto / span 1; }
+.ff-col-2 { grid-column: auto / span 2; }
+.ff-col-3 { grid-column: auto / span 3; }
+.ff-col-4 { grid-column: auto / span 4; }
+.ff-col-5 { grid-column: auto / span 5; }
+.ff-col-6 { grid-column: auto / span 6; }
+.ff-col-7 { grid-column: auto / span 7; }
+.ff-col-8 { grid-column: auto / span 8; }
+.ff-col-9 { grid-column: auto / span 9; }
+.ff-col-10 { grid-column: auto / span 10; }
+.ff-col-11 { grid-column: auto / span 11; }
+.ff-col-12 { grid-column: auto / span 12; }
+
+/*
+ * Select any element with a class .ff-col.
+ * Only select an element if it is a direct child of the .ff-row.
+ * Place it in the grid so it spans 12 column and is equal width.
+ */
+.ff-row > .ff-col {
+    /*grid-column: span 12;*/
+    grid-column: auto / span 1;
+}
+
+/* Tablet classes */
+@media (min-width: 768px) {
+    .ff-col-md-1 { grid-column: auto / span 1; }
+    .ff-col-md-2 { grid-column: auto / span 2; }
+    .ff-col-md-3 { grid-column: auto / span 3; }
+    .ff-col-md-4 { grid-column: auto / span 4; }
+    .ff-col-md-5 { grid-column: auto / span 5; }
+    .ff-col-md-6 { grid-column: auto / span 6; }
+    .ff-col-md-7 { grid-column: auto / span 7; }
+    .ff-col-md-8 { grid-column: auto / span 8; }
+    .ff-col-md-9 { grid-column: auto / span 9; }
+    .ff-col-md-10 { grid-column: auto / span 10; }
+    .ff-col-md-11 { grid-column: auto / span 11; }
+    .ff-col-md-12 { grid-column: auto / span 12; }
+
+    /*
+     * Select any element with a class .ff-col-md.
+     * Only select an element if it is a direct child of the .ff-row.
+     * Place it in the grid so it spans 1 column.
+     */
+    .ff-row > .ff-col-md {
+        grid-column: auto / span 1;
+    }
+}
+
+/* Desktop classes */
+@media (min-width: 1024px) {
+    .ff-col-lg-1 { grid-column: auto / span 1; }
+    .ff-col-lg-2 { grid-column: auto / span 2; }
+    .ff-col-lg-3 { grid-column: auto / span 3; }
+    .ff-col-lg-4 { grid-column: auto / span 4; }
+    .ff-col-lg-5 { grid-column: auto / span 5; }
+    .ff-col-lg-6 { grid-column: auto / span 6; }
+    .ff-col-lg-7 { grid-column: auto / span 7; }
+    .ff-col-lg-8 { grid-column: auto / span 8; }
+    .ff-col-lg-9 { grid-column: auto / span 9; }
+    .ff-col-lg-10 { grid-column: auto / span 10; }
+    .ff-col-lg-11 { grid-column: auto / span 11; }
+    .ff-col-lg-12 { grid-column: auto / span 12; }
+
+    /*
+     * Select any element with a class .ff-col-lg.
+     * Only select an element if it is a direct child of the .ff-row.
+     * Place it in the grid so it spans 1 column.
+     */
+    .ff-row > .ff-col-lg {
+        grid-column: auto / span 1;
+    }
+}
