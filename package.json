@@ -8,8 +8,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "bun build ./src/styles/fondueflow.css --outdir ./dist --minify",
-    "build:js": "bun build ./src/scripts/fondueflow.js --outdir ./dist --minify",
+    "build:css": "bun build ./src/styles/fondueflow.css --outdir ./dist/styles --minify",
+    "build:js": "bun build ./src/scripts/fondueflow.js --outdir ./dist/scripts --minify",
     "build": "npm run build:css && npm run build:js"
   },
   "repository": {
