@@ -108,5 +108,5 @@ Boilerplate code framework for the Webflow website.
 <!-- Link -->
 <a href="#" class="ff-link">See more</a>
 <!-- Link opens in a new tab -->
- <a href="#" class="ff-link" target="_blank" rel="noopener noreferrer">See more</a>
+<a href="#" class="ff-link" target="_blank" rel="noopener noreferrer">See more</a>
 ```
