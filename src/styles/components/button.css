@@ -1,0 +1,45 @@
+/* Extension to the .ff-button styling found in the base.css stylesheet */
+.ff-button {
+    /* Round the button corners with a pill-like shape. */
+    border-radius: 1.5rem;
+    /* Set the vertical and horizontal padding. */
+    padding: 0.75rem 1rem;
+    /*
+     * Animate only the background-color change.
+     * Make the transition last 0.2 seconds.
+     * Use an ease timing curve for a smoother start and end.
+     */
+    transition: background-color 0.2s ease;
+}
+
+/* 
+ * Default button hover state.
+ * Variables for the color values are taken from the utilities/color.css stylesheet. 
+ */
+.ff-button:hover {
+    background-color: var(--color-violet);
+    color: var(--color-white);
+    border: 1px solid var(--color-violet);
+}
+
+/* 
+ * Button: dark theme.
+ * Append this class to the .ff-button class on a button element.
+ * Variables for the color values are taken from the utilities/color.css stylesheet. 
+ */
+.ff-button--dark {
+    background-color: var(--color-charcoal);
+    color: var(--color-white);
+    border: 1px solid var(--color-charcoal);
+}
+
+/* 
+ * Button: light theme.
+ * Append this class to the .ff-button class on a button element.
+ * Variables for the color values are taken from the utilities/color.css stylesheet. 
+ */
+.ff-button--light {
+    background-color: var(--color-white);
+    color: var(--color-charcoal);
+    border: 1px solid var(--color-charcoal);
+}
