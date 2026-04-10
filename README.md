@@ -58,6 +58,19 @@ Boilerplate code framework for the Webflow website.
 
 ## Components
 
+### Button
+
+```html
+<section class="ff-section">
+    <div class="ff-container">
+        <!-- Button: Dark Mode -->
+        <a href="#" role="button" class="ff-button ff-button--dark">Button dark</a>
+        <!-- Button: Light Mode -->
+        <a href="#" role="button" class="ff-button ff-button--light">Button light</a>
+    </div>
+</section>
+```
+
 ### Card
 
 ```html
