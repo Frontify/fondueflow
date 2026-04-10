@@ -1,0 +1,34 @@
+/* Link */
+.ff-link {
+    /* Keeps the link inline while allowing positioning. */
+    position: relative;
+    display: inline-block;
+    /* Inherit the color set by the parent element. */
+    color: inherit;
+    /* Remove the default underline. */
+    text-decoration: none;
+    /* Remove any additional default margin added to the top of the link. */
+    margin-top: 0;
+}
+
+/* Underline */
+.ff-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    /* Set the height/thickness of the underline beneath the link label. */
+    height: 1px;
+    background-color: currentColor;
+    /* Start the underline as being visible. */
+    transform: scaleX(1);
+    transform-origin: left;
+    /* Animate the underline movement on hover. */
+    transition: transform 0.25s ease;
+}
+
+/* On hover, shrink the underline towards the left. */
+.ff-link:hover::after {
+    transform: scaleX(0);
+}
