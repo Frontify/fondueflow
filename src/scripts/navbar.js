@@ -38,6 +38,56 @@ document.addEventListener('DOMContentLoaded', function () {
         resetPanelsAndTriggers();
     }
 
+    function initPanelSwitchers(scope) {
+        var switchLinks = scope.querySelectorAll('[data-panel-switch]');
+        var contentPanels = scope.querySelectorAll('[data-panel-content]');
+
+        if (!switchLinks.length || !contentPanels.length) return;
+
+        function activatePanel(panelName) {
+            for (var i = 0; i < switchLinks.length; i++) {
+                var linkName = switchLinks[i].getAttribute('data-panel-switch');
+                if (linkName === panelName) {
+                    switchLinks[i].classList.add('is-active');
+                } else {
+                    switchLinks[i].classList.remove('is-active');
+                }
+            }
+
+            for (var j = 0; j < contentPanels.length; j++) {
+                var contentName = contentPanels[j].getAttribute('data-panel-content');
+                if (contentName === panelName) {
+                    contentPanels[j].style.display = 'block';
+                    contentPanels[j].classList.add('is-active');
+                } else {
+                    contentPanels[j].style.display = 'none';
+                    contentPanels[j].classList.remove('is-active');
+                }
+            }
+        }
+
+        for (var k = 0; k < switchLinks.length; k++) {
+            switchLinks[k].addEventListener('mouseenter', function () {
+                var panelName = this.getAttribute('data-panel-switch');
+                if (!panelName) return;
+
+                activatePanel(panelName);
+            });
+
+            switchLinks[k].addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var panelName = this.getAttribute('data-panel-switch');
+                if (!panelName) return;
+
+                activatePanel(panelName);
+            });
+        }
+
+        activatePanel('link-one');
+    }
+
     function openPanel(panelName) {
         var panel = document.querySelector('.ff-submenu-panel[data-panel="' + panelName + '"]');
         if (!panel) return null;
@@ -53,6 +103,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (navbarContent) {
             navbarContent.classList.add('ff-navbar-content--open');
         }
+
+        initPanelSwitchers(panel);
 
         return panel;
     }

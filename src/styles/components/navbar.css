@@ -6,7 +6,6 @@ body::before {
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
     pointer-events: none;
-
     opacity: 0;
     visibility: hidden;
     transition: opacity 220ms ease, visibility 220ms ease;
@@ -308,4 +307,30 @@ body.ff-submenu-open {
         border-radius: 0.5rem;
         background-color: #e1e1db;
     }
+}
+
+[data-panel-content] {
+    display: none;
+}
+
+[data-panel-content].is-active {
+    display: block;
+}
+
+[data-panel-switch] {
+    cursor: pointer;
+}
+
+[data-panel-switch].is-active .test-panel-nav-link-large-title,
+[data-panel-switch].is-active .test-panel-nav-link-large-description {
+    opacity: 1;
+}
+
+[data-panel-switch]:not(.is-active) .test-panel-nav-link-large-title,
+[data-panel-switch]:not(.is-active) .test-panel-nav-link-large-description {
+    opacity: 0.55;
+}
+
+.text-panel-link-split-content-internal {
+    padding: unset !important;
 }
