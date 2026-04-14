@@ -54,6 +54,7 @@ body.ff-submenu-open {
 
 .ff-navbar-cta {
     display: flex;
+    align-items: center;
     gap: 0.8rem;
 }
 
@@ -63,7 +64,8 @@ body.ff-submenu-open {
     margin: 0 1rem;
 }
 
-.ff-navbar-trigger {
+.ff-navbar-trigger,
+.ff-navbar-cta-link {
     color: var(--color-charcoal);
     text-decoration: none;
     font-weight: 500;
@@ -75,7 +77,8 @@ body.ff-submenu-open {
     gap: 0.4rem;
 }
 
-.ff-navbar-trigger {
+.ff-navbar-trigger,
+.ff-navbar-cta-link {
     background: none;
     border: none;
     cursor: pointer;
@@ -105,7 +108,9 @@ body.ff-submenu-open {
 }
 
 .ff-navbar-trigger:hover,
-.ff-navbar-trigger.is-active {
+.ff-navbar-trigger.is-active,
+.ff-navbar-cta-link:hover,
+.ff-navbar-cta-link.is-active {
     background-color: #f0f0eb;
 }
 
