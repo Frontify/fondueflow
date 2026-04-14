@@ -145,9 +145,14 @@ body.ff-submenu-open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    /* Fixes scroll issue on mobile */
-    overflow: scroll;
-    height: 100vh;
+}
+
+@media (max-width: 991px) {
+    .ff-submenu.is-open {
+        /* Fixes scroll issue on mobile */
+        overflow: scroll;
+        height: 100vh;
+    }
 }
 
 .ff-submenu-panel {
