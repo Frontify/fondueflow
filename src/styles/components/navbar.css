@@ -114,6 +114,12 @@ body.ff-submenu-open {
     background-color: #f0f0eb;
 }
 
+@media (max-width: 991px) {
+  .ff-navbar-nav .ff-navbar-trigger {
+    display: none;
+  }
+}
+
 .ff-submenu {
     position: absolute;
     top: calc(100% + 0.75rem);
@@ -139,6 +145,9 @@ body.ff-submenu-open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    /* Fixes scroll issue on mobile */
+    overflow: scroll;
+    height: 100vh;
 }
 
 .ff-submenu-panel {
