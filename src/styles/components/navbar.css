@@ -171,3 +171,7 @@ body.ff-submenu-open {
     color: var(--color-charcoal);
     text-decoration: none;
 }
+
+[data-wf--button-2-0--type="dark"] {
+    color: #fff !important;
+}
