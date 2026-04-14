@@ -273,3 +273,13 @@ body.ff-submenu-open {
 .ff-submenu-mobile a:hover {
     background-color: #f0f0eb;
 }
+
+@media (max-width: 991px) {
+  #loginCTA {
+    display: none;
+  }
+
+  body.ff-submenu-open #loginCTA {
+    display: flex;
+  }
+}
