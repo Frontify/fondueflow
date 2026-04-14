@@ -181,6 +181,18 @@ body.ff-submenu-open {
     text-decoration: none;
 }
 
+@media (max-width: 991px) {
+  .ff-submenu-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .ff-submenu-grid > div:first-child {
+    border-right: none;
+    padding-right: 0;
+  }
+}
+
 [data-wf--button-2-0--type="dark"] {
     color: #fff !important;
 }
