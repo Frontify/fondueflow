@@ -1,0 +1,33 @@
+.ff-navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    margin-top: 1rem;
+}
+
+.ff-navbar-content {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(240, 240, 235, 0.8);
+    backdrop-filter: blur(200px);
+    -webkit-backdrop-filter: blur(200px);
+    transition: background-color 260ms ease;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.ff-navbar-links,
+.ff-navbar-nav,
+.ff-navbar-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.ff-navbar-nav a,
+.ff-navbar-cta a {
+    color: var(--color-charcoal);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem; /* 14px */
+}

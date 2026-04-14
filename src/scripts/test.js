@@ -1,1 +1,1 @@
-alert("This is a test alert in a test script file.");
+//alert("This is a test alert in a test script file.");
