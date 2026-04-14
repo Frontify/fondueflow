@@ -83,6 +83,7 @@ body.ff-submenu-open {
     border-radius: 2rem;
     font: inherit;
     font-size: 0.875rem;
+    font-weight: 500;
 }
 
 .ff-navbar-trigger .w-embed {
@@ -148,6 +149,11 @@ body.ff-submenu-open {
     /*grid-template-columns: repeat(3, minmax(0, 1fr));*/
     grid-template-columns: 1fr 2fr 1fr;
     gap: 2rem;
+}
+
+.ff-submenu-grid > div:first-child {
+    border-right: 1px solid #e5e5df;
+    padding-right: 2rem;
 }
 
 .ff-submenu-grid h4 {
