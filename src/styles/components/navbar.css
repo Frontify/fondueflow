@@ -283,3 +283,11 @@ body.ff-submenu-open {
     display: flex;
   }
 }
+
+@media (max-width: 991px) {
+    .ff-submenu-grid-links {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background-color: #e1e1db;
+    }
+}
