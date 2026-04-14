@@ -175,3 +175,75 @@ body.ff-submenu-open {
 [data-wf--button-2-0--type="dark"] {
     color: #fff !important;
 }
+
+.ff-navbar-burger {
+    /*display: none;*/
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 999rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.ff-navbar-burger:hover {
+    background-color: #f0f0eb;
+}
+
+.ff-navbar-burger-line {
+    position: absolute;
+    width: 1.25rem;
+    height: 2px;
+    background-color: var(--color-charcoal);
+    border-radius: 999rem;
+    transition: transform 220ms ease, opacity 220ms ease, top 220ms ease;
+}
+
+.ff-navbar-burger-line:nth-child(1) {
+    top: 1.05rem;
+}
+
+.ff-navbar-burger-line:nth-child(2) {
+    top: 1.45rem;
+}
+
+.ff-navbar-burger-line:nth-child(3) {
+    top: 1.85rem;
+}
+
+.ff-navbar-burger.is-open .ff-navbar-burger-line:nth-child(1) {
+    top: 1.45rem;
+    transform: rotate(45deg);
+}
+
+.ff-navbar-burger.is-open .ff-navbar-burger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.ff-navbar-burger.is-open .ff-navbar-burger-line:nth-child(3) {
+    top: 1.45rem;
+    transform: rotate(-45deg);
+}
+
+.ff-submenu-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ff-submenu-mobile a {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.ff-submenu-mobile a:hover {
+    background-color: #f0f0eb;
+}
