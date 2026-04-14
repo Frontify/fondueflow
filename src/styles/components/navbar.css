@@ -1,3 +1,28 @@
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-color: #23212166;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    pointer-events: none;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 220ms ease, visibility 220ms ease;
+    z-index: 900;
+}
+
+body.ff-submenu-open::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+body.ff-submenu-open {
+    overflow: hidden;
+    touch-action: none;
+}
+
 .ff-navbar {
     position: fixed;
     width: 100%;
@@ -6,8 +31,10 @@
 }
 
 .ff-navbar-content {
+    position: relative;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background: rgba(240, 240, 235, 0.8);
     backdrop-filter: blur(200px);
     -webkit-backdrop-filter: blur(200px);
@@ -16,18 +43,119 @@
     padding: 1rem;
 }
 
-.ff-navbar-links,
-.ff-navbar-nav,
-.ff-navbar-cta {
+.ff-navbar-content.ff-navbar-content--open {
+    background: #fff;
+}
+
+.ff-navbar-nav {
     display: flex;
-    gap: 1rem;
     align-items: center;
 }
 
-.ff-navbar-nav a,
-.ff-navbar-cta a {
+.ff-navbar-cta {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.ff-frontify-logo.w-embed {
+    display: flex;
+    width: 1.5rem;
+    margin: 0 1rem;
+}
+
+.ff-navbar-trigger {
     color: var(--color-charcoal);
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.875rem; /* 14px */
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.ff-navbar-trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font: inherit;
+    font-size: 0.875rem;
+}
+
+.ff-navbar-trigger .w-embed {
+    display: flex;
+}
+
+.ff-navbar-trigger svg {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    transition: transform 220ms ease;
+    transform: rotate(0deg);
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+.ff-navbar-trigger.is-active svg {
+    transform: rotate(180deg);
+}
+
+.ff-navbar-trigger:hover,
+.ff-navbar-trigger.is-active {
+    background-color: #f0f0eb;
+}
+
+.ff-submenu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
+
+    background: #fff;
+    /*backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);*/
+    border-radius: 0.5rem;
+    padding: 1rem;
+    /*box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);*/
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 220ms ease, visibility 220ms ease;
+}
+
+.ff-submenu.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.ff-submenu-panel {
+    display: none;
+}
+
+.ff-submenu-panel.is-active {
+    display: block;
+}
+
+.ff-submenu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+.ff-submenu-grid h4 {
+    margin: 0 0 1rem;
+}
+
+.ff-submenu-grid a {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--color-charcoal);
+    text-decoration: none;
 }
