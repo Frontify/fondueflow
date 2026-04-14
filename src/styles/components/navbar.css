@@ -285,6 +285,12 @@ body.ff-submenu-open {
 }
 
 @media (max-width: 991px) {
+    .ff-navbar-cta-link {
+        display: none;
+    }
+}
+
+@media (max-width: 991px) {
     .ff-submenu-grid-links {
         padding: 1rem;
         border-radius: 0.5rem;
