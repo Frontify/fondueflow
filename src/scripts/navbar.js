@@ -156,12 +156,9 @@ document.addEventListener('DOMContentLoaded', function () {
         burger.addEventListener('click', function (e) {
             e.stopPropagation();
 
-            var mobilePanel = document.querySelector('.ff-submenu-panel[data-panel="mobile"]');
-            var isAlreadyOpen = mobilePanel &&
-                mobilePanel.classList.contains('is-active') &&
-                submenu.classList.contains('is-open');
+            var isAnySubmenuOpen = submenu.classList.contains('is-open');
 
-            if (isAlreadyOpen) {
+            if (isAnySubmenuOpen) {
                 closeMenu();
             } else {
                 openBurgerMenu();
