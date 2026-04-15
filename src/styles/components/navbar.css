@@ -113,6 +113,11 @@ body.ff-submenu-open {
     transform: rotate(180deg);
 }
 
+.w-dropdown-toggle[aria-expanded="true"] .ff-chevron-icon-svg svg,
+.w-dropdown-toggle.w--open .ff-chevron-icon-svg svg {
+    transform: rotate(180deg);
+}
+
 .ff-navbar-trigger:hover,
 .ff-navbar-trigger.is-active,
 .ff-navbar-cta-link:hover,
@@ -352,6 +357,7 @@ body.ff-submenu-open {
     .ff-navbar .breadcrumb {
         display: none;
     }
+
     .test-panel-mobile-back-link {
         display: none;
     }
@@ -367,12 +373,12 @@ body.ff-submenu-open {
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    padding: 0;
 }
 
 .w-locales-items {
     background-color: white;
     padding: 1rem 2rem;
-    /* border-radius: 0.5rem; */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -417,8 +423,24 @@ body.ff-submenu-open {
     margin-bottom: 1rem;
 }
 
-.w-dropdown-toggle {
+.ff-submenu-bottom-menu .w-dropdown-toggle {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ff-submenu-bottom-menu .w-dropdown {
+    margin: 0;
+    width: 100%;
+}
+
+.ff-submenu-bottom-menu a {
     padding: 0;
+    margin-bottom: 0.4rem;
+}
+
+.ff-submenu-bottom-menu a:hover {
+    background-color: transparent;
 }
 
 /* But of a hack to set the mobile menu content on the main screen to be full height */
@@ -435,24 +457,4 @@ body.ff-submenu-open {
 
 .ff-mobile-menu-item .ff-arrow-icon {
     width: 1rem;
-}
-
-.ff-submenu-bottom-menu a {
-    padding: 0;
-    margin-bottom: 0.4rem;
-}
-
-.ff-submenu-bottom-menu a:hover {
-    background-color: transparent;
-}
-
-.ff-submenu-bottom-menu .w-dropdown {
-    margin: 0;
-    width: 100%;
-}
-
-.ff-submenu-bottom-menu .w-dropdown-toggle {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
 }
