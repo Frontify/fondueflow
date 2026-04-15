@@ -7,6 +7,27 @@ document.addEventListener('DOMContentLoaded', function () {
     var breadcrumbs = document.querySelectorAll('.ff-navbar .breadcrumb');
     var localeMenus = document.querySelectorAll('.w-locales-list');
 
+    function isMainSubmenuOpen() {
+        return submenu && submenu.classList.contains('is-open');
+    }
+
+    function updateBodyOverlayState() {
+        var hasOpenLocaleMenu = false;
+
+        for (var i = 0; i < localeMenus.length; i++) {
+            if (localeMenus[i].classList.contains('is-active')) {
+                hasOpenLocaleMenu = true;
+                break;
+            }
+        }
+
+        if (isMainSubmenuOpen() || hasOpenLocaleMenu) {
+            document.body.classList.add('ff-submenu-open');
+        } else {
+            document.body.classList.remove('ff-submenu-open');
+        }
+    }
+
     function closeLocaleMenus(exceptMenu) {
         for (var i = 0; i < localeMenus.length; i++) {
             if (exceptMenu && localeMenus[i] === exceptMenu) continue;
@@ -24,6 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 list.classList.remove('w--open');
             }
         }
+
+        updateBodyOverlayState();
     }
 
     function openLocaleMenu(menu) {
@@ -44,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (list) {
             list.classList.add('w--open');
         }
+
+        updateBodyOverlayState();
     }
 
     function toggleLocaleMenu(menu) {
@@ -87,13 +112,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function closeMenu() {
         submenu.classList.remove('is-open');
-        document.body.classList.remove('ff-submenu-open');
 
         if (navbarContent) {
             navbarContent.classList.remove('ff-navbar-content--open');
         }
 
         resetPanelsAndTriggers();
+        updateBodyOverlayState();
     }
 
     function initPanelSwitchers(scope) {
@@ -156,13 +181,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         submenu.classList.add('is-open');
         panel.classList.add('is-active');
-        document.body.classList.add('ff-submenu-open');
 
         if (navbarContent) {
             navbarContent.classList.add('ff-navbar-content--open');
         }
 
         initPanelSwitchers(panel);
+        updateBodyOverlayState();
 
         return panel;
     }
