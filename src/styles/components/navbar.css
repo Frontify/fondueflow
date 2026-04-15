@@ -403,6 +403,20 @@ body.ff-submenu-open {
     margin-top: 13rem;
 }
 
+@media (max-width: 991px) {
+    .w-dropdown-list {
+        margin-top: 1rem;
+    }
+}
+
+.ff-submenu-bottom-menu .w-locales-items {
+    background-color: #e1e1db;
+}
+
+.ff-submenu-bottom-menu .w-locales-list {
+    margin-bottom: 1rem;
+}
+
 .w-dropdown-toggle {
     padding: 0;
 }
@@ -430,4 +444,15 @@ body.ff-submenu-open {
 
 .ff-submenu-bottom-menu a:hover {
     background-color: transparent;
+}
+
+.ff-submenu-bottom-menu .w-dropdown {
+    margin: 0;
+    width: 100%;
+}
+
+.ff-submenu-bottom-menu .w-dropdown-toggle {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
