@@ -21,10 +21,20 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        if (isMainSubmenuOpen() || hasOpenLocaleMenu) {
+        var shouldBeOpen = isMainSubmenuOpen() || hasOpenLocaleMenu;
+
+        if (shouldBeOpen) {
             document.body.classList.add('ff-submenu-open');
+
+            if (navbarContent) {
+                navbarContent.classList.add('ff-navbar-content--open');
+            }
         } else {
             document.body.classList.remove('ff-submenu-open');
+
+            if (navbarContent) {
+                navbarContent.classList.remove('ff-navbar-content--open');
+            }
         }
     }
 
@@ -112,11 +122,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function closeMenu() {
         submenu.classList.remove('is-open');
-
-        if (navbarContent) {
-            navbarContent.classList.remove('ff-navbar-content--open');
-        }
-
         resetPanelsAndTriggers();
         updateBodyOverlayState();
     }
@@ -181,10 +186,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         submenu.classList.add('is-open');
         panel.classList.add('is-active');
-
-        if (navbarContent) {
-            navbarContent.classList.add('ff-navbar-content--open');
-        }
 
         initPanelSwitchers(panel);
         updateBodyOverlayState();
