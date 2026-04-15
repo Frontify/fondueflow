@@ -309,6 +309,12 @@ body.ff-submenu-open {
     }
 }
 
+@media (min-width: 992px) {
+    .ff-navbar-burger {
+        display: none;
+    }
+}
+
 [data-panel-content] {
     display: none;
 }
@@ -333,4 +339,10 @@ body.ff-submenu-open {
 
 .text-panel-link-split-content-internal {
     padding: unset !important;
+}
+
+@media (min-width: 992px) {
+    .ff-navbar .breadcrumb {
+        display: none;
+    }
 }
