@@ -5,6 +5,58 @@ document.addEventListener('DOMContentLoaded', function () {
     var navbarContent = document.querySelector('.ff-navbar-content');
     var burger = document.querySelector('.ff-navbar-burger');
     var breadcrumbs = document.querySelectorAll('.ff-navbar .breadcrumb');
+    var localeMenus = document.querySelectorAll('.w-locales-list');
+
+    function closeLocaleMenus(exceptMenu) {
+        for (var i = 0; i < localeMenus.length; i++) {
+            if (exceptMenu && localeMenus[i] === exceptMenu) continue;
+
+            localeMenus[i].classList.remove('is-active');
+
+            var toggle = localeMenus[i].querySelector('.w-dropdown-toggle');
+            if (toggle) {
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.classList.remove('w--open');
+            }
+
+            var list = localeMenus[i].querySelector('.w-dropdown-list');
+            if (list) {
+                list.classList.remove('w--open');
+            }
+        }
+    }
+
+    function openLocaleMenu(menu) {
+        if (!menu) return;
+
+        closeMenu();
+        closeLocaleMenus(menu);
+
+        menu.classList.add('is-active');
+
+        var toggle = menu.querySelector('.w-dropdown-toggle');
+        if (toggle) {
+            toggle.setAttribute('aria-expanded', 'true');
+            toggle.classList.add('w--open');
+        }
+
+        var list = menu.querySelector('.w-dropdown-list');
+        if (list) {
+            list.classList.add('w--open');
+        }
+    }
+
+    function toggleLocaleMenu(menu) {
+        if (!menu) return;
+
+        var isOpen = menu.classList.contains('is-active');
+
+        if (isOpen) {
+            closeLocaleMenus();
+        } else {
+            openLocaleMenu(menu);
+        }
+    }
 
     function resetPanelsAndTriggers() {
         for (var i = 0; i < panels.length; i++) {
@@ -76,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function () {
             switchLinks[k].addEventListener('mouseenter', function () {
                 var panelName = this.getAttribute('data-panel-switch');
                 if (!panelName) return;
-
                 activatePanel(panelName);
             });
 
@@ -86,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 var panelName = this.getAttribute('data-panel-switch');
                 if (!panelName) return;
-
                 activatePanel(panelName);
             });
         }
@@ -97,6 +147,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function openPanel(panelName) {
         var panel = document.querySelector('.ff-submenu-panel[data-panel="' + panelName + '"]');
         if (!panel) return null;
+
+        closeLocaleMenus();
 
         for (var i = 0; i < panels.length; i++) {
             panels[i].classList.remove('is-active');
@@ -117,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function openMenu(menuName, trigger) {
         resetPanelsAndTriggers();
+        closeLocaleMenus();
 
         var panel = openPanel(menuName);
         if (!panel) return;
@@ -127,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function openBurgerMenu() {
         resetPanelsAndTriggers();
+        closeLocaleMenus();
 
         var panel = openPanel('mobile');
         if (!panel) return;
@@ -168,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (burger) {
         burger.addEventListener('click', function (e) {
             e.stopPropagation();
+            closeLocaleMenus();
 
             var mobilePanel = document.querySelector('.ff-submenu-panel[data-panel="mobile"]');
             var isMobileMenuOpen = mobilePanel &&
@@ -186,8 +241,34 @@ document.addEventListener('DOMContentLoaded', function () {
         breadcrumbs[m].addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
+            closeLocaleMenus();
             openBurgerMenu();
         });
+    }
+
+    for (var n = 0; n < localeMenus.length; n++) {
+        (function (menu) {
+            var toggle = menu.querySelector('.w-dropdown-toggle');
+            var list = menu.querySelector('.w-dropdown-list');
+
+            if (!toggle) return;
+
+            menu.addEventListener('mouseenter', function () {
+                openLocaleMenu(menu);
+            });
+
+            toggle.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleLocaleMenu(menu);
+            });
+
+            if (list) {
+                list.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+        })(localeMenus[n]);
     }
 
     submenu.addEventListener('click', function (e) {
@@ -199,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var menuName = mobileTrigger.getAttribute('data-menu');
             if (!menuName) return;
 
+            closeLocaleMenus();
             openPanel(menuName);
             return;
         }
@@ -212,6 +294,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var clickedBurger = burger && burger.contains(e.target);
         var clickedMobileTrigger = e.target.closest('.ff-mobile-menu-trigger');
         var clickedBreadcrumb = e.target.closest('.ff-navbar .breadcrumb');
+        var clickedLocaleMenu = e.target.closest('.w-locales-list');
+
+        if (!clickedLocaleMenu) {
+            closeLocaleMenus();
+        }
 
         if (!clickedTrigger && !clickedInsideSubmenu && !clickedBurger && !clickedBreadcrumb && !clickedMobileTrigger) {
             closeMenu();

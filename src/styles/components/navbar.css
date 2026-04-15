@@ -113,11 +113,6 @@ body.ff-submenu-open {
     transform: rotate(180deg);
 }
 
-.w-dropdown-toggle[aria-expanded="true"] .ff-chevron-icon-svg svg,
-.w-dropdown-toggle.w--open .ff-chevron-icon-svg svg {
-    transform: rotate(180deg);
-}
-
 .ff-navbar-trigger:hover,
 .ff-navbar-trigger.is-active,
 .ff-navbar-cta-link:hover,
@@ -376,6 +371,29 @@ body.ff-submenu-open {
     padding: 0;
 }
 
+.w-locales-list {
+    position: relative;
+}
+
+.w-locales-list .w-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.w-locales-list .ff-chevron-icon-svg svg,
+.w-locales-list .w-dropdown-toggle svg {
+    transition: transform 220ms ease;
+    transform: rotate(0deg);
+}
+
+.w-locales-list.is-active .ff-chevron-icon-svg svg,
+.w-locales-list.is-active .w-dropdown-toggle svg,
+.w-locales-list:hover .ff-chevron-icon-svg svg,
+.w-locales-list:hover .w-dropdown-toggle svg {
+    transform: rotate(180deg);
+}
+
 .w-locales-items {
     background-color: white;
     padding: 1rem 2rem;
@@ -405,12 +423,26 @@ body.ff-submenu-open {
     border-radius: 0.5rem;
 }
 
-.w-dropdown-list {
-    margin-top: 13rem;
+.w-locales-list .w-dropdown-list {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
+    left: auto;
+    margin-top: 0;
+    z-index: 1101;
+}
+
+.w-locales-list.is-active .w-dropdown-list {
+    display: block;
 }
 
 @media (max-width: 991px) {
-    .w-dropdown-list {
+    .w-locales-list .w-dropdown-list {
+        position: static;
+        top: auto;
+        right: auto;
+        left: auto;
         margin-top: 1rem;
     }
 }
@@ -443,7 +475,7 @@ body.ff-submenu-open {
     background-color: transparent;
 }
 
-/* But of a hack to set the mobile menu content on the main screen to be full height */
+/* Bit of a hack to set the mobile menu content on the main screen to be full height */
 .ff-submenu-mobile-inner {
     height: 70vh;
     justify-content: space-between;
