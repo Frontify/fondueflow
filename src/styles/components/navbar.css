@@ -135,7 +135,7 @@ body.ff-submenu-open {
     box-sizing: border-box;
     background: #fff;
     border-radius: 0.5rem;
-    padding: 2rem;
+    padding: 1rem;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -405,4 +405,29 @@ body.ff-submenu-open {
 
 .w-dropdown-toggle {
     padding: 0;
+}
+
+/* But of a hack to set the mobile menu content on the main screen to be full height */
+.ff-submenu-mobile-inner {
+    height: 70vh;
+    justify-content: space-between;
+}
+
+.ff-mobile-menu-item .ff-mobile-menu-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ff-mobile-menu-item .ff-arrow-icon {
+    width: 1rem;
+}
+
+.ff-submenu-bottom-menu a {
+    padding: 0;
+    margin-bottom: 0.4rem;
+}
+
+.ff-submenu-bottom-menu a:hover {
+    background-color: transparent;
 }
