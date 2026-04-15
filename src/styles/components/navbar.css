@@ -388,10 +388,15 @@ body.ff-submenu-open {
 }
 
 .w-locales-list.is-active .ff-chevron-icon-svg svg,
-.w-locales-list.is-active .w-dropdown-toggle svg,
-.w-locales-list:hover .ff-chevron-icon-svg svg,
-.w-locales-list:hover .w-dropdown-toggle svg {
+.w-locales-list.is-active .w-dropdown-toggle svg {
     transform: rotate(180deg);
+}
+
+@media (min-width: 992px) {
+    .w-locales-list:hover .ff-chevron-icon-svg svg,
+    .w-locales-list:hover .w-dropdown-toggle svg {
+        transform: rotate(180deg);
+    }
 }
 
 .w-locales-items {

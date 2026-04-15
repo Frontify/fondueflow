@@ -62,7 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function openLocaleMenu(menu) {
         if (!menu) return;
 
-        closeMenu();
+        var isInsideMobileSubmenu = !!menu.closest('.ff-submenu-bottom-menu');
+
+        if (!isInsideMobileSubmenu) {
+            closeMenu();
+        }
+
         closeLocaleMenus(menu);
 
         menu.classList.add('is-active');
@@ -280,7 +285,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!toggle) return;
 
             menu.addEventListener('mouseenter', function () {
-                openLocaleMenu(menu);
+                if (window.innerWidth >= 992) {
+                    openLocaleMenu(menu);
+                }
             });
 
             toggle.addEventListener('click', function (e) {
