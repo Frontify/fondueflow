@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var panels = document.querySelectorAll('.ff-submenu-panel');
     var navbarContent = document.querySelector('.ff-navbar-content');
     var burger = document.querySelector('.ff-navbar-burger');
+    var breadcrumbs = document.querySelectorAll('.ff-navbar .breadcrumb');
 
     function resetPanelsAndTriggers() {
         for (var i = 0; i < panels.length; i++) {
@@ -24,6 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (burger) {
             burger.setAttribute('aria-expanded', 'false');
             burger.classList.remove('is-open');
+        }
+
+        for (var l = 0; l < breadcrumbs.length; l++) {
+            breadcrumbs[l].setAttribute('aria-expanded', 'false');
+            breadcrumbs[l].classList.remove('is-active');
         }
     }
 
@@ -123,10 +129,17 @@ document.addEventListener('DOMContentLoaded', function () {
         resetPanelsAndTriggers();
 
         var panel = openPanel('mobile');
-        if (!panel || !burger) return;
+        if (!panel) return;
 
-        burger.classList.add('is-open');
-        burger.setAttribute('aria-expanded', 'true');
+        if (burger) {
+            burger.classList.add('is-open');
+            burger.setAttribute('aria-expanded', 'true');
+        }
+
+        for (var i = 0; i < breadcrumbs.length; i++) {
+            breadcrumbs[i].classList.add('is-active');
+            breadcrumbs[i].setAttribute('aria-expanded', 'true');
+        }
     }
 
     for (var i = 0; i < triggers.length; i++) {
@@ -156,13 +169,24 @@ document.addEventListener('DOMContentLoaded', function () {
         burger.addEventListener('click', function (e) {
             e.stopPropagation();
 
-            var isAnySubmenuOpen = submenu.classList.contains('is-open');
+            var mobilePanel = document.querySelector('.ff-submenu-panel[data-panel="mobile"]');
+            var isMobileMenuOpen = mobilePanel &&
+                mobilePanel.classList.contains('is-active') &&
+                submenu.classList.contains('is-open');
 
-            if (isAnySubmenuOpen) {
+            if (isMobileMenuOpen) {
                 closeMenu();
             } else {
                 openBurgerMenu();
             }
+        });
+    }
+
+    for (var m = 0; m < breadcrumbs.length; m++) {
+        breadcrumbs[m].addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openBurgerMenu();
         });
     }
 
@@ -187,8 +211,9 @@ document.addEventListener('DOMContentLoaded', function () {
         var clickedInsideSubmenu = submenu.contains(e.target);
         var clickedBurger = burger && burger.contains(e.target);
         var clickedMobileTrigger = e.target.closest('.ff-mobile-menu-trigger');
+        var clickedBreadcrumb = e.target.closest('.ff-navbar .breadcrumb');
 
-        if (!clickedTrigger && !clickedInsideSubmenu && !clickedBurger && !clickedMobileTrigger) {
+        if (!clickedTrigger && !clickedInsideSubmenu && !clickedBurger && !clickedBreadcrumb && !clickedMobileTrigger) {
             closeMenu();
         }
     });

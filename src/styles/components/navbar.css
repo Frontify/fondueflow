@@ -345,4 +345,13 @@ body.ff-submenu-open {
     .ff-navbar .breadcrumb {
         display: none;
     }
+    .test-panel-mobile-back-link {
+        display: none;
+    }
+}
+
+@media (max-width: 991px) {
+    .test-panel-text-block-label {
+        display: none;
+    }
 }
