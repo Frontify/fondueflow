@@ -63,6 +63,12 @@ body.ff-submenu-open {
     margin: 0 1rem;
 }
 
+@media (max-width: 991px) {
+    .ff-frontify-logo.w-embed {
+        margin: 0;
+    }
+}
+
 .ff-navbar-trigger,
 .ff-navbar-cta-link {
     color: var(--color-charcoal);
