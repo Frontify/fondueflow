@@ -1,3 +1,9 @@
+/*
+ * Navigation JavaScript script.
+ * This needs to be optimised and improved.
+ * Was built quickly due to the need to get the navigation working.
+ */
+
 document.addEventListener('DOMContentLoaded', function () {
     var triggers = document.querySelectorAll('.ff-navbar-trigger');
     var submenu = document.getElementById('ff-submenu');
