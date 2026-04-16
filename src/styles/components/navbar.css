@@ -1,3 +1,13 @@
+.ff-navbar {
+    /* Override the hidden display for the nav in Webflow.
+     * This has been done so that the nav is hidden in design mode and the canvas.
+     * This CSS does not run in the canvas, only on page load.
+     * To ensure the design mode canvas is clear of a broken layout, it is hidden.
+     * This ensures the nav is visible when the page loads.
+     */
+    display: block !important;
+}
+
 body::before {
     content: "";
     position: fixed;
