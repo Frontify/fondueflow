@@ -172,17 +172,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 activatePanel(panelName);
             });
 
-            switchLinks[k].addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-
+            switchLinks[k].addEventListener('focus', function () {
                 var panelName = this.getAttribute('data-panel-switch');
                 if (!panelName) return;
                 activatePanel(panelName);
             });
         }
 
-        activatePanel('link-one');
+        if (switchLinks[0]) {
+            activatePanel(switchLinks[0].getAttribute('data-panel-switch'));
+        }
     }
 
     function openPanel(panelName) {
