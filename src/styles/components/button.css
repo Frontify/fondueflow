@@ -21,8 +21,10 @@
 /* 
  * Button: dark theme.
  * Append this class to the .ff-button class on a button element.
+ * Includes targeting Webflow variants to set the button type to be "dark" or "light".
  * Variables for the color values are taken from the utilities/color.css stylesheet. 
  */
+[data-wf--button--button-theme="dark"],
 .ff-button--dark {
     background-color: var(--color-core-black);
     color: var(--color-core-white);
@@ -32,8 +34,10 @@
 /* 
  * Button: light theme.
  * Append this class to the .ff-button class on a button element.
+ * Includes targeting Webflow variants to set the button type to be "dark" or "light".
  * Variables for the color values are taken from the utilities/color.css stylesheet. 
  */
+[data-wf--button--button-theme="light"],
 .ff-button--light {
     background-color: var(--color-core-white);
     color: var(--color-core-black);
@@ -41,6 +45,8 @@
 }
 
 /* Hover state: shared between dark and light buttons. */
+[data-wf--button--button-theme="dark"]:hover,
+[data-wf--button--button-theme="light"]:hover,
 .ff-button--dark:hover,
 .ff-button--light:hover {
     background-color: var(--color-marker-purple);
