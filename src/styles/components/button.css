@@ -1,38 +1,14 @@
-/*
-Background color of light and dark theme buttons: 
-
-Light-mode - core-black
-Dark-mode - core-white
-
-Border color and radius for both light and dark themes
-
-Light-mode - core-black
-Dark-mode - core-white 
-
-Text color and font-size/font family for the button
-
-Light-mode - core-white
-Dark-mode - core-black 
-Font-size - 14px (0.875rem) type:label/medium 
-
-Hover states for light and dark themes: background, text color and border color
-
-BG - marker-purple
-text-color - core-white 
-border-color - marker-purple 
-
-Padding (x & y) to ensure the correct size of the buttons are consistent - 
-
-left/right 16px (1rem)
-top/bottom 12px (0.75rem)
-*/
-
-
 /* Extension to the .ff-button styling found in the base.css stylesheet */
 .ff-button {
+    /* Set the default font size which is 14px (0.875rem) for all buttons. */
+    font-size: 0.875rem;
     /* Round the button corners with a pill-like shape. */
     border-radius: 1.5rem;
-    /* Set the vertical and horizontal padding. */
+    /* 
+     * Set the vertical and horizontal padding. 
+     * left/right: 16px (1rem).
+     * top/bottom: 12px (0.75rem).
+     */
     padding: 0.75rem 1rem;
     /*
      * Animate only the background-color change.
@@ -43,24 +19,14 @@ top/bottom 12px (0.75rem)
 }
 
 /* 
- * Default button hover state.
- * Variables for the color values are taken from the utilities/color.css stylesheet. 
- */
-.ff-button:hover {
-    background-color: var(--color-violet);
-    color: var(--color-white);
-    border: 1px solid var(--color-violet);
-}
-
-/* 
  * Button: dark theme.
  * Append this class to the .ff-button class on a button element.
  * Variables for the color values are taken from the utilities/color.css stylesheet. 
  */
 .ff-button--dark {
-    background-color: var(--color-charcoal);
-    color: var(--color-white);
-    border: 1px solid var(--color-charcoal);
+    background-color: var(--color-core-black);
+    color: var(--color-core-white);
+    border: 1px solid var(--color-core-black);
 }
 
 /* 
@@ -69,7 +35,15 @@ top/bottom 12px (0.75rem)
  * Variables for the color values are taken from the utilities/color.css stylesheet. 
  */
 .ff-button--light {
-    background-color: var(--color-white);
-    color: var(--color-charcoal);
-    border: 1px solid var(--color-charcoal);
+    background-color: var(--color-core-white);
+    color: var(--color-core-black);
+    border: 1px solid var(--color-core-black);
+}
+
+/* Hover state: shared between dark and light buttons. */
+.ff-button--dark:hover,
+.ff-button--light:hover {
+    background-color: var(--color-marker-purple);
+    color: var(--color-core-white);
+    border: 1px solid var(--color-marker-purple);
 }
