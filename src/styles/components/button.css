@@ -1,3 +1,33 @@
+/*
+Background color of light and dark theme buttons: 
+
+Light-mode - core-black
+Dark-mode - core-white
+
+Border color and radius for both light and dark themes
+
+Light-mode - core-black
+Dark-mode - core-white 
+
+Text color and font-size/font family for the button
+
+Light-mode - core-white
+Dark-mode - core-black 
+Font-size - 14px (0.875rem) type:label/medium 
+
+Hover states for light and dark themes: background, text color and border color
+
+BG - marker-purple
+text-color - core-white 
+border-color - marker-purple 
+
+Padding (x & y) to ensure the correct size of the buttons are consistent - 
+
+left/right 16px (1rem)
+top/bottom 12px (0.75rem)
+*/
+
+
 /* Extension to the .ff-button styling found in the base.css stylesheet */
 .ff-button {
     /* Round the button corners with a pill-like shape. */
@@ -6,10 +36,10 @@
     padding: 0.75rem 1rem;
     /*
      * Animate only the background-color change.
-     * Make the transition last 0.2 seconds.
+     * Make the transition last 0.15 seconds (150m/s).
      * Use an ease timing curve for a smoother start and end.
      */
-    transition: background-color 0.2s ease;
+    transition: background-color 0.15s ease;
 }
 
 /* 
