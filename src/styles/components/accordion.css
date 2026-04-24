@@ -1,26 +1,29 @@
-    .ff-accordion__button {
-      width: 100%;
-      padding: 15px;
-      font-size: 16px;
-      text-align: left;
-      background: #eee;
-      border: none;
-      cursor: pointer;
-      outline: none;
-    }
+.ff-accordion__button {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    text-align: left;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-    .ff-accordion__button:hover {
-      background: #ddd;
-    }
+.ff-accordion__button:hover {
+    background: #ddd;
+}
 
-    .ff-accordion__content {
-      display: none;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-top: none;
-    }
+.ff-accordion__content {
+    display: none;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-top: none;
+}
 
-    .ff-accordion__content.open {
-      display: block;
-    }
+.ff-accordion__content.open {
+    display: block;
+}
 
