@@ -1,4 +1,4 @@
-    .accordion-button {
+    .ff-accordion__button {
       width: 100%;
       padding: 15px;
       font-size: 16px;
@@ -9,18 +9,18 @@
       outline: none;
     }
 
-    .accordion-button:hover {
+    .ff-accordion__button:hover {
       background: #ddd;
     }
 
-    .accordion-content {
+    .ff-accordion__content {
       display: none;
       padding: 15px;
       border: 1px solid #ddd;
       border-top: none;
     }
 
-    .accordion-content.open {
+    .ff-accordion__content.open {
       display: block;
     }
 
