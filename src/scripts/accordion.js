@@ -1,4 +1,4 @@
-    const buttons = document.querySelectorAll(".accordion-button");
+    const buttons = document.querySelectorAll(".js-accordion-button");
 
     buttons.forEach(button => {
       button.addEventListener("click", () => {
