@@ -1,8 +1,10 @@
-    const buttons = document.querySelectorAll(".js-ff-accordion__button");
+const accordionButtons = document.querySelectorAll(".js-ff-accordion__button");
 
-    buttons.forEach(button => {
-      button.addEventListener("click", () => {
+accordionButtons.forEach((button) => {
+    button.addEventListener("click", () => {
         const content = button.nextElementSibling;
+
         content.classList.toggle("open");
-      });
+        button.classList.toggle("is-open");
     });
+});

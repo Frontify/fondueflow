@@ -27,3 +27,12 @@
     display: block;
 }
 
+
+
+.ff-accordion__icon {
+    transition: transform 0.3s ease;
+}
+
+.ff-accordion__button.is-open .ff-accordion__icon {
+    transform: rotate(180deg);
+}
