@@ -1,0 +1,26 @@
+    .accordion-button {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      text-align: left;
+      background: #eee;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .accordion-button:hover {
+      background: #ddd;
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-top: none;
+    }
+
+    .accordion-content.open {
+      display: block;
+    }
+
