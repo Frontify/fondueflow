@@ -1,2 +1,2 @@
-import "./accordion.js";
-import "./navbar.js";
+import "./components/accordion.js";
+import "./components/navbar.js";
