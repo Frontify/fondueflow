@@ -1,3 +1,14 @@
+:root {
+    /* Border style and color. */
+    --button-border: 1px solid var(--color-core-black);
+}
+
+/* Theme: page set to dark mode and attribute added to the body element. */
+[data-theme="dark"] {
+    /* Set the border style and color when dark mode is set on the page. */
+    --button-border: 1px solid var(--color-core-white);
+}
+
 /* Extension to the .ff-button styling found in the base.css stylesheet */
 .ff-button {
     /* Set the default font size which is 14px (0.875rem) for all buttons. */
@@ -28,7 +39,7 @@
 .ff-button--dark {
     background-color: var(--color-core-black);
     color: var(--color-core-white);
-    border: 1px solid var(--color-core-black);
+    border: var(--button-border);
 }
 
 /* 
@@ -41,7 +52,7 @@
 .ff-button--light {
     background-color: var(--color-core-white);
     color: var(--color-core-black);
-    border: 1px solid var(--color-core-black);
+    border: var(--button-border);
 }
 
 /* Hover state: shared between dark and light buttons. */
