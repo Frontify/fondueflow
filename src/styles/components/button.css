@@ -2,8 +2,8 @@
 .ff-button {
     /* Set the default font size which is 14px (0.875rem) for all buttons. */
     font-size: 0.875rem;
-    /* Round the button corners with a pill-like shape. */
-    border-radius: 1.5rem;
+    /* Round the button corners. */
+    border-radius: 2rem;
     /* 
      * Set the vertical and horizontal padding. 
      * left/right: 16px (1rem).
