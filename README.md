@@ -1,8 +1,14 @@
 # fondueflow
 
-![Node version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2FOWNER%2FREPO%2Fmain%2F.nvmrc&search=%5E(v%3F.*)%24&replace=%241&label=node&logo=nodedotjs)
-
 Boilerplate code framework for the Webflow website.
+
+## Deployment
+The boilerplate code will be deployed to the website using `GitHub pages` when any changes are made to the `main` branch. It is recommended to commit changes on the `development` branch and merge into the `main` branch using a `pull request` when completed and tested.
+
+The optimised `CSS` and `JavaScript` files can be found here:
+
++ https://frontify.github.io/fondueflow/dist/styles/fondueflow.css
++ https://frontify.github.io/fondueflow/dist/scripts/fondueflow.js
 
 ## Adding a Section and Container
 

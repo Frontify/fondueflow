@@ -1,5 +1,8 @@
 :root {
     --color-white: #fff;
+    --color-core-white: #f0f0eb;
     --color-charcoal: #111110;
     --color-violet: #b60ae3;
+    --color-core-black: var(--color-charcoal);
+    --color-marker-purple: var(--color-violet);
 }

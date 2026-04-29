@@ -1,45 +1,66 @@
+:root {
+    /* Border style and color. */
+    --button-border: 1px solid var(--color-core-black);
+}
+
+/* Theme: page set to dark mode and attribute added to the body element. */
+[data-theme="dark"] {
+    /* Set the border style and color when dark mode is set on the page. */
+    --button-border: 1px solid var(--color-core-white);
+}
+
 /* Extension to the .ff-button styling found in the base.css stylesheet */
 .ff-button {
-    /* Round the button corners with a pill-like shape. */
-    border-radius: 1.5rem;
-    /* Set the vertical and horizontal padding. */
+    /* Set the default font size which is 14px (0.875rem) for all buttons. */
+    font-size: 0.875rem;
+    /* Round the button corners. */
+    border-radius: 2rem;
+    /* 
+     * Set the vertical and horizontal padding. 
+     * left/right: 16px (1rem).
+     * top/bottom: 12px (0.75rem).
+     */
     padding: 0.75rem 1rem;
     /*
      * Animate only the background-color change.
-     * Make the transition last 0.2 seconds.
+     * Make the transition last 0.15 seconds (150m/s).
      * Use an ease timing curve for a smoother start and end.
      */
-    transition: background-color 0.2s ease;
-}
-
-/* 
- * Default button hover state.
- * Variables for the color values are taken from the utilities/color.css stylesheet. 
- */
-.ff-button:hover {
-    background-color: var(--color-violet);
-    color: var(--color-white);
-    border: 1px solid var(--color-violet);
+    transition: background-color 0.15s ease;
 }
 
 /* 
  * Button: dark theme.
  * Append this class to the .ff-button class on a button element.
+ * Includes targeting Webflow variants to set the button type to be "dark" or "light".
  * Variables for the color values are taken from the utilities/color.css stylesheet. 
  */
+[data-wf--button--button-theme="dark"],
 .ff-button--dark {
-    background-color: var(--color-charcoal);
-    color: var(--color-white);
-    border: 1px solid var(--color-charcoal);
+    background-color: var(--color-core-black);
+    color: var(--color-core-white);
+    border: var(--button-border);
 }
 
 /* 
  * Button: light theme.
  * Append this class to the .ff-button class on a button element.
+ * Includes targeting Webflow variants to set the button type to be "dark" or "light".
  * Variables for the color values are taken from the utilities/color.css stylesheet. 
  */
+[data-wf--button--button-theme="light"],
 .ff-button--light {
-    background-color: var(--color-white);
-    color: var(--color-charcoal);
-    border: 1px solid var(--color-charcoal);
+    background-color: var(--color-core-white);
+    color: var(--color-core-black);
+    border: var(--button-border);
+}
+
+/* Hover state: shared between dark and light buttons. */
+[data-wf--button--button-theme="dark"]:hover,
+[data-wf--button--button-theme="light"]:hover,
+.ff-button--dark:hover,
+.ff-button--light:hover {
+    background-color: var(--color-marker-purple);
+    color: var(--color-core-white);
+    border: 1px solid var(--color-marker-purple);
 }
