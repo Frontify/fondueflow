@@ -17,19 +17,25 @@
 }
 
 .ff-accordion__content {
-    display: none;
-    padding: 15px;
+    height: 0;
+    overflow: hidden;
     border: 1px solid #ddd;
     border-top: none;
+    transition: height 0.35s ease;
 }
 
-.ff-accordion__content.open {
-    display: block;
+.ff-accordion__content-inner {
+    padding: 15px;
 }
-
-
 
 .ff-accordion__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    transform-origin: center;
     transition: transform 0.3s ease;
 }
 
