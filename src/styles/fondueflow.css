@@ -6,9 +6,9 @@
  */
 
 /* Reset (Optional, remove if not needed) */
-@import "./reset.css";
+@import "./core/reset.css";
 /* Base styles for elements */
-@import "./base.css";
+@import "./core/base.css";
 /* Responsive 12-column grid to create layouts */
 @import "./layout/grid.css";
 
@@ -16,6 +16,7 @@
 @import "./utilities/color.css";
 
 /* Components */
+@import "./components/accordion.css";
 @import "./components/button.css";
 @import "./components/card.css";
 @import "./components/link.css";

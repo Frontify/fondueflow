@@ -1,0 +1,44 @@
+.ff-accordion__button {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    text-align: left;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ff-accordion__button:hover {
+    background: #ddd;
+}
+
+.ff-accordion__content {
+    height: 0;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-top: none;
+    transition: height 0.35s ease;
+}
+
+.ff-accordion__content-inner {
+    padding: 15px;
+}
+
+.ff-accordion__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+.ff-accordion__button.is-open .ff-accordion__icon {
+    transform: rotate(180deg);
+}
