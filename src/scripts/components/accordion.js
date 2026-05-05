@@ -52,7 +52,7 @@ function initAccordion() {
 }
 
 function setDefaultOpenItems(accordion, accordionButtons, mode) {
-    const defaultOpenItems = accordion.querySelectorAll("[data-accordion-open]");
+    const defaultOpenItems = accordion.querySelectorAll('[data-accordion-open="true"]');
 
     defaultOpenItems.forEach((item, index) => {
         if (mode === "single" && index > 0) return;
