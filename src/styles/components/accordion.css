@@ -1,6 +1,7 @@
 .ff-accordion__button {
     width: 100%;
-    padding: 15px;
+    /*padding: 15px;*/
+    padding: 15px 0;
     font-size: 16px;
     text-align: left;
     background: #eee;
@@ -25,7 +26,7 @@
 }
 
 .ff-accordion__content-inner {
-    padding: 15px;
+    padding: 15px 0;
 }
 
 .ff-accordion__icon {
@@ -41,4 +42,54 @@
 
 .ff-accordion__button.is-open .ff-accordion__icon {
     transform: rotate(180deg);
+}
+
+.tester-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+  
+.ff-u-mb-0 {
+	margin-bottom: 0;
+}
+
+.ff-accordion__item {
+  border-bottom: 1px solid #CBCBC5;
+}
+
+.ff-accordion__item:hover {
+  border-bottom: 1px solid #111110;
+}
+
+.ff-accordion__content-col-layout-inner {
+  padding: 0.75rem 0;
+  border-top: 1px solid #CBCBC5;
+  border-bottom: 1px solid #CBCBC5;
+  margin-bottom: 3rem; /* 48px */
+}
+
+.ff-testimonial {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* 24px */
+}
+
+.ff-accordion__button,
+.ff-accordion__button:hover {
+	background-color: #f0f0eb !important;
+}
+
+.ff-accordion__content {
+  border: none !important;
+}
+
+.ff-accordion__item:hover {
+  border-bottom: 1px solid #111110;
+}
+
+.ff-testimonial__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
