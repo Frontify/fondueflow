@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var breadcrumbs = document.querySelectorAll('.ff-navbar .breadcrumb');
     var localeMenus = document.querySelectorAll('.w-locales-list');
 
+    if (!submenu) return;
+
+    function isDesktop() {
+        return window.innerWidth >= 992;
+    }
+
     function isMainSubmenuOpen() {
         return submenu && submenu.classList.contains('is-open');
     }
@@ -137,6 +143,25 @@ document.addEventListener('DOMContentLoaded', function () {
         updateBodyOverlayState();
     }
 
+    function closeSubmenuOnMouseLeave(e) {
+        if (!isDesktop()) return;
+
+        var nextElement = e.relatedTarget;
+
+        if (!nextElement) {
+            closeMenu();
+            return;
+        }
+
+        var movedInsideSubmenu = submenu.contains(nextElement);
+        var movedToTrigger = nextElement.closest && nextElement.closest('.ff-navbar-trigger');
+        var movedToLocaleMenu = nextElement.closest && nextElement.closest('.w-locales-list');
+
+        if (!movedInsideSubmenu && !movedToTrigger && !movedToLocaleMenu) {
+            closeMenu();
+        }
+    }
+
     function initPanelSwitchers(scope) {
         var switchLinks = scope.querySelectorAll('[data-panel-switch]');
         var contentPanels = scope.querySelectorAll('[data-panel-content]');
@@ -234,6 +259,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     for (var i = 0; i < triggers.length; i++) {
         triggers[i].addEventListener('mouseenter', function () {
+            if (!isDesktop()) return;
+
             var menuName = this.getAttribute('data-menu');
             openMenu(menuName, this);
         });
@@ -290,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!toggle) return;
 
             menu.addEventListener('mouseenter', function () {
-                if (window.innerWidth >= 992) {
+                if (isDesktop()) {
                     openLocaleMenu(menu);
                 }
             });
@@ -308,6 +335,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })(localeMenus[n]);
     }
+
+    submenu.addEventListener('mouseleave', closeSubmenuOnMouseLeave);
 
     submenu.addEventListener('click', function (e) {
         var mobileTrigger = e.target.closest('.ff-mobile-menu-trigger');
@@ -338,8 +367,14 @@ document.addEventListener('DOMContentLoaded', function () {
             closeLocaleMenus();
         }
 
-        if (!clickedTrigger && !clickedInsideSubmenu && !clickedBurger && !clickedBreadcrumb && !clickedMobileTrigger) {
-            closeMenu();
+        /*
+         * On desktop, the submenu closes when the cursor leaves the submenu itself.
+         * On mobile, keep outside-click closing because mouseleave does not apply.
+         */
+        if (!isDesktop()) {
+            if (!clickedTrigger && !clickedInsideSubmenu && !clickedBurger && !clickedBreadcrumb && !clickedMobileTrigger) {
+                closeMenu();
+            }
         }
     });
 });
