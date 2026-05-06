@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var burger = document.querySelector('.ff-navbar-burger');
     var breadcrumbs = document.querySelectorAll('.ff-navbar .breadcrumb');
     var localeMenus = document.querySelectorAll('.w-locales-list');
+    var closeMenuTimer = null;
+    var submenuTransitionDuration = 320;
 
     if (!submenu) return;
 
@@ -138,9 +140,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function closeMenu() {
+        if (closeMenuTimer) {
+            window.clearTimeout(closeMenuTimer);
+            closeMenuTimer = null;
+        }
+
+        if (!submenu.classList.contains('is-open')) {
+            resetPanelsAndTriggers();
+            updateBodyOverlayState();
+            return;
+        }
+
         submenu.classList.remove('is-open');
-        resetPanelsAndTriggers();
         updateBodyOverlayState();
+
+        closeMenuTimer = window.setTimeout(function () {
+            if (!submenu.classList.contains('is-open')) {
+                resetPanelsAndTriggers();
+            }
+
+            closeMenuTimer = null;
+        }, submenuTransitionDuration);
     }
 
     function closeSubmenuOnMouseLeave(e) {
@@ -210,6 +230,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function openPanel(panelName) {
+        if (closeMenuTimer) {
+            window.clearTimeout(closeMenuTimer);
+            closeMenuTimer = null;
+        }
+
         var panel = document.querySelector('.ff-submenu-panel[data-panel="' + panelName + '"]');
         if (!panel) return null;
 
