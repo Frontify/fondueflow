@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var localeMenus = document.querySelectorAll('.w-locales-list');
     var closeMenuTimer = null;
     var submenuTransitionDuration = 320;
+    var isPageScrollLocked = false;
+    var pageScrollPosition = 0;
 
     if (!submenu) return;
 
@@ -23,6 +25,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function isMainSubmenuOpen() {
         return submenu && submenu.classList.contains('is-open');
+    }
+
+    function lockPageScroll() {
+        if (isPageScrollLocked) return;
+
+        pageScrollPosition = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + pageScrollPosition + 'px';
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.width = '100%';
+
+        isPageScrollLocked = true;
+    }
+
+    function unlockPageScroll() {
+        if (!isPageScrollLocked) return;
+
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.width = '';
+
+        window.scrollTo(0, pageScrollPosition);
+
+        isPageScrollLocked = false;
     }
 
     function updateBodyOverlayState() {
@@ -39,12 +69,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (shouldBeOpen) {
             document.body.classList.add('ff-submenu-open');
+            lockPageScroll();
 
             if (navbarContent) {
                 navbarContent.classList.add('ff-navbar-content--open');
             }
         } else {
             document.body.classList.remove('ff-submenu-open');
+            unlockPageScroll();
 
             if (navbarContent) {
                 navbarContent.classList.remove('ff-navbar-content--open');
@@ -191,6 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function activatePanel(panelName) {
             for (var i = 0; i < switchLinks.length; i++) {
                 var linkName = switchLinks[i].getAttribute('data-panel-switch');
+
                 if (linkName === panelName) {
                     switchLinks[i].classList.add('is-active');
                 } else {
@@ -200,6 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             for (var j = 0; j < contentPanels.length; j++) {
                 var contentName = contentPanels[j].getAttribute('data-panel-content');
+
                 if (contentName === panelName) {
                     contentPanels[j].style.display = 'block';
                     contentPanels[j].classList.add('is-active');
