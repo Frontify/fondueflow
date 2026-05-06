@@ -41,7 +41,6 @@ body.ff-submenu-open::before {
 
 body.ff-submenu-open {
     overflow: hidden;
-    touch-action: none;
 }
 
 .ff-navbar {
@@ -185,6 +184,7 @@ body.ff-submenu-open {
         overflow-y: auto;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
     }
 
     .ff-submenu * {
