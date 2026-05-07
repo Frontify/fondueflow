@@ -3,7 +3,7 @@
 Boilerplate code framework for the Webflow website.
 
 ## Deployment
-The boilerplate code will be deployed to the website using `GitHub pages` when any changes are made to the `main` branch. It is recommended to commit changes on the `development` branch and merge into the `main` branch using a `pull request` when completed and tested.
+The boilerplate code will be deployed to the website using `GitHub pages` when any changes are made to the `main` branch. It is recommended to commit changes on a feature branch and merge into the `main` branch using a `pull request` when completed and tested.
 
 The optimised `CSS` and `JavaScript` files can be found here:
 

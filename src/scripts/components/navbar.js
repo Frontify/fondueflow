@@ -12,9 +12,36 @@ document.addEventListener('DOMContentLoaded', function () {
     var burger = document.querySelector('.ff-navbar-burger');
     var breadcrumbs = document.querySelectorAll('.ff-navbar .breadcrumb');
     var localeMenus = document.querySelectorAll('.w-locales-list');
+    var closeMenuTimer = null;
+    var submenuTransitionDuration = 320;
+    var isPageScrollLocked = false;
+
+    if (!submenu) return;
+
+    function isDesktop() {
+        return window.innerWidth >= 992;
+    }
 
     function isMainSubmenuOpen() {
         return submenu && submenu.classList.contains('is-open');
+    }
+
+    function lockPageScroll() {
+        if (isPageScrollLocked) return;
+
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+
+        isPageScrollLocked = true;
+    }
+
+    function unlockPageScroll() {
+        if (!isPageScrollLocked) return;
+
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+
+        isPageScrollLocked = false;
     }
 
     function updateBodyOverlayState() {
@@ -31,12 +58,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (shouldBeOpen) {
             document.body.classList.add('ff-submenu-open');
+            lockPageScroll();
 
             if (navbarContent) {
                 navbarContent.classList.add('ff-navbar-content--open');
             }
         } else {
             document.body.classList.remove('ff-submenu-open');
+            unlockPageScroll();
 
             if (navbarContent) {
                 navbarContent.classList.remove('ff-navbar-content--open');
@@ -132,9 +161,46 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function closeMenu() {
+        if (closeMenuTimer) {
+            window.clearTimeout(closeMenuTimer);
+            closeMenuTimer = null;
+        }
+
+        if (!submenu.classList.contains('is-open')) {
+            resetPanelsAndTriggers();
+            updateBodyOverlayState();
+            return;
+        }
+
         submenu.classList.remove('is-open');
-        resetPanelsAndTriggers();
         updateBodyOverlayState();
+
+        closeMenuTimer = window.setTimeout(function () {
+            if (!submenu.classList.contains('is-open')) {
+                resetPanelsAndTriggers();
+            }
+
+            closeMenuTimer = null;
+        }, submenuTransitionDuration);
+    }
+
+    function closeSubmenuOnMouseLeave(e) {
+        if (!isDesktop()) return;
+
+        var nextElement = e.relatedTarget;
+
+        if (!nextElement) {
+            closeMenu();
+            return;
+        }
+
+        var movedInsideSubmenu = submenu.contains(nextElement);
+        var movedToTrigger = nextElement.closest && nextElement.closest('.ff-navbar-trigger');
+        var movedToLocaleMenu = nextElement.closest && nextElement.closest('.w-locales-list');
+
+        if (!movedInsideSubmenu && !movedToTrigger && !movedToLocaleMenu) {
+            closeMenu();
+        }
     }
 
     function initPanelSwitchers(scope) {
@@ -146,6 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function activatePanel(panelName) {
             for (var i = 0; i < switchLinks.length; i++) {
                 var linkName = switchLinks[i].getAttribute('data-panel-switch');
+
                 if (linkName === panelName) {
                     switchLinks[i].classList.add('is-active');
                 } else {
@@ -155,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             for (var j = 0; j < contentPanels.length; j++) {
                 var contentName = contentPanels[j].getAttribute('data-panel-content');
+
                 if (contentName === panelName) {
                     contentPanels[j].style.display = 'block';
                     contentPanels[j].classList.add('is-active');
@@ -185,6 +253,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function openPanel(panelName) {
+        if (closeMenuTimer) {
+            window.clearTimeout(closeMenuTimer);
+            closeMenuTimer = null;
+        }
+
         var panel = document.querySelector('.ff-submenu-panel[data-panel="' + panelName + '"]');
         if (!panel) return null;
 
@@ -234,6 +307,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     for (var i = 0; i < triggers.length; i++) {
         triggers[i].addEventListener('mouseenter', function () {
+            if (!isDesktop()) return;
+
             var menuName = this.getAttribute('data-menu');
             openMenu(menuName, this);
         });
@@ -290,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!toggle) return;
 
             menu.addEventListener('mouseenter', function () {
-                if (window.innerWidth >= 992) {
+                if (isDesktop()) {
                     openLocaleMenu(menu);
                 }
             });
@@ -308,6 +383,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })(localeMenus[n]);
     }
+
+    submenu.addEventListener('mouseleave', closeSubmenuOnMouseLeave);
 
     submenu.addEventListener('click', function (e) {
         var mobileTrigger = e.target.closest('.ff-mobile-menu-trigger');
@@ -338,8 +415,14 @@ document.addEventListener('DOMContentLoaded', function () {
             closeLocaleMenus();
         }
 
-        if (!clickedTrigger && !clickedInsideSubmenu && !clickedBurger && !clickedBreadcrumb && !clickedMobileTrigger) {
-            closeMenu();
+        /*
+         * On desktop, the submenu closes when the cursor leaves the submenu itself.
+         * On mobile, keep outside-click closing because mouseleave does not apply.
+         */
+        if (!isDesktop()) {
+            if (!clickedTrigger && !clickedInsideSubmenu && !clickedBurger && !clickedBreadcrumb && !clickedMobileTrigger) {
+                closeMenu();
+            }
         }
     });
 });

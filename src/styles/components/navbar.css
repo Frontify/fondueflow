@@ -4,6 +4,12 @@
  * Was built quickly due to the need to get the navigation working.
  */
 
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .ff-navbar {
     /* Override the hidden display for the nav in Webflow.
      * This has been done so that the nav is hidden in design mode and the canvas.
@@ -35,12 +41,13 @@ body.ff-submenu-open::before {
 
 body.ff-submenu-open {
     overflow: hidden;
-    touch-action: none;
 }
 
 .ff-navbar {
     position: fixed;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     z-index: 1000;
     margin-top: 1rem;
 }
@@ -56,6 +63,8 @@ body.ff-submenu-open {
     transition: background-color 260ms ease;
     border-radius: 0.5rem;
     padding: 1rem;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .ff-navbar-content.ff-navbar-content--open {
@@ -148,6 +157,7 @@ body.ff-submenu-open {
     left: 0;
     right: 0;
     width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
     background: #fff;
     border-radius: 0.5rem;
@@ -155,7 +165,7 @@ body.ff-submenu-open {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 220ms ease, visibility 220ms ease;
+    transition: opacity 320ms ease, visibility 320ms ease;
 }
 
 .ff-submenu.is-open {
@@ -166,14 +176,27 @@ body.ff-submenu-open {
 
 @media (max-width: 991px) {
     .ff-submenu {
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
         height: calc(100dvh - 7rem);
         overflow-y: auto;
+        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+    }
+
+    .ff-submenu * {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }
 
 .ff-submenu-panel {
     display: none;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .ff-submenu-panel.is-active {
@@ -204,7 +227,7 @@ body.ff-submenu-open {
 
 @media (max-width: 991px) {
     .ff-submenu-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 1.5rem;
     }
 
@@ -283,11 +306,16 @@ body.ff-submenu-open {
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .ff-submenu-mobile-inner {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .ff-submenu-mobile a {
@@ -329,6 +357,9 @@ body.ff-submenu-open {
         padding: 1rem;
         border-radius: 0.5rem;
         background-color: #e1e1db;
+        max-width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
     }
 }
 
@@ -500,6 +531,15 @@ body.ff-submenu-open {
 .ff-submenu-mobile-inner {
     height: 70vh;
     justify-content: space-between;
+}
+
+@media (max-width: 991px) {
+    .ff-submenu-mobile-inner {
+        min-height: 70vh;
+        height: auto;
+        justify-content: space-between;
+        overflow-x: hidden;
+    }
 }
 
 .ff-mobile-menu-item .ff-mobile-menu-trigger {
