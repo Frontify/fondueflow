@@ -93,3 +93,11 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
+.ff-testimonial .ff-image {
+  aspect-ratio: 3 / 4 !important;
+}
+
+.tester-col .ff-row {
+  margin-bottom: 0;
+}
