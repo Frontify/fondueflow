@@ -2,7 +2,7 @@
   "name": "fondueflow",
   "version": "0.3.2",
   "engines": {
-    "node": ">=24.14.1"
+    "node": ">=24.18.0"
   },
   "description": "Boilerplate code framework for the Webflow website.",
   "main": "index.js",

@@ -1,4 +1,4 @@
-function initAccordion() {
+export function initAccordion() {
     const accordions = document.querySelectorAll(".ff-accordion");
 
     accordions.forEach((accordion) => {
@@ -127,10 +127,4 @@ function closeAccordionItem(button, content, inner) {
         },
         { once: true }
     );
-}
-
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initAccordion);
-} else {
-    initAccordion();
 }
