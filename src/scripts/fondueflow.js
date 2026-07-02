@@ -1,5 +1,8 @@
-import "./components/accordion.js";
-import "./components/navbar.js";
+//import "./components/accordion.js";
+//import "./components/navbar.js";
+
+import { initAccordion } from "./components/accordion.js";
+import { initNavbar } from "./components/navbar.js";
 
 /*
  * Use this variable to check the version of the framework currently being used.
@@ -9,3 +12,14 @@ import "./components/navbar.js";
 const FONDUE_VERSION = "0.4.0";
 // Attach variable to the window object to allow output in the console.
 window.FONDUE_VERSION = FONDUE_VERSION;
+
+function initFondue() {
+    initAccordion();
+    initNavbar();
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initFondue);
+} else {
+    initFondue();
+}

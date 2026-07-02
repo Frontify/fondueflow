@@ -1,10 +1,6 @@
-/*
- * Navigation JavaScript script.
- * This needs to be optimised and improved.
- * Was built quickly due to the need to get the navigation working.
- */
+// components/navbar.js
 
-document.addEventListener('DOMContentLoaded', function () {
+export function initNavbar() {
     var triggers = document.querySelectorAll('.ff-navbar-trigger');
     var submenu = document.getElementById('ff-submenu');
     var panels = document.querySelectorAll('.ff-submenu-panel');
@@ -415,14 +411,10 @@ document.addEventListener('DOMContentLoaded', function () {
             closeLocaleMenus();
         }
 
-        /*
-         * On desktop, the submenu closes when the cursor leaves the submenu itself.
-         * On mobile, keep outside-click closing because mouseleave does not apply.
-         */
         if (!isDesktop()) {
             if (!clickedTrigger && !clickedInsideSubmenu && !clickedBurger && !clickedBreadcrumb && !clickedMobileTrigger) {
                 closeMenu();
             }
         }
     });
-});
+}
