@@ -5,8 +5,11 @@
  * Run the Bun build script in the package.json file: $ npm run build:css
  */
 
-/* Reset (Optional, remove if not needed) */
-@import "./core/reset.css";
+/* 
+ * Reset (Optional, remove if not needed).
+ * Removed in 0.4.1 as this was slowing the scrolling within the Webflow design mode canvas.
+ */
+/*@import "./core/reset.css";*/
 /* Base styles for elements */
 @import "./core/base.css";
 /* Responsive 12-column grid to create layouts */
