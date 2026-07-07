@@ -1,420 +1,610 @@
 // components/navbar.js
 
-export function initNavbar() {
-    var triggers = document.querySelectorAll('.ff-navbar-trigger');
-    var submenu = document.getElementById('ff-submenu');
-    var panels = document.querySelectorAll('.ff-submenu-panel');
-    var navbarContent = document.querySelector('.ff-navbar-content');
-    var burger = document.querySelector('.ff-navbar-burger');
-    var breadcrumbs = document.querySelectorAll('.ff-navbar .breadcrumb');
-    var localeMenus = document.querySelectorAll('.w-locales-list');
-    var closeMenuTimer = null;
-    var submenuTransitionDuration = 320;
-    var isPageScrollLocked = false;
+// Export the initNavbar function so it can be imported and run elsewhere.
+export const initNavbar = () => {
+    // Get all desktop navbar trigger elements and convert the NodeList into an array.
+    const triggers = [...document.querySelectorAll('.ff-navbar-trigger')];
 
+    // Get the main submenu wrapper by its ID.
+    const submenu = document.getElementById('ff-submenu');
+
+    // Get all submenu panels and convert the NodeList into an array.
+    const panels = [...document.querySelectorAll('.ff-submenu-panel')];
+
+    // Get the main navbar content wrapper.
+    const navbarContent = document.querySelector('.ff-navbar-content');
+
+    // Get the mobile burger button.
+    const burger = document.querySelector('.ff-navbar-burger');
+
+    // Get all breadcrumb elements inside the navbar and convert the NodeList into an array.
+    const breadcrumbs = [...document.querySelectorAll('.ff-navbar .breadcrumb')];
+
+    // Get all locale/language dropdown menus and convert the NodeList into an array.
+    const localeMenus = [...document.querySelectorAll('.w-locales-list')];
+
+    // Store the submenu transition duration in milliseconds.
+    const submenuTransitionDuration = 320;
+
+    // Store the active timeout used when closing the submenu.
+    let closeMenuTimer = null;
+
+    // Track whether page scrolling is currently locked.
+    let isPageScrollLocked = false;
+
+    // Stop running the function if the submenu element does not exist.
     if (!submenu) return;
 
-    function isDesktop() {
-        return window.innerWidth >= 992;
-    }
+    // Check whether the viewport is desktop-sized.
+    const isDesktop = () => window.innerWidth >= 992;
 
-    function isMainSubmenuOpen() {
-        return submenu && submenu.classList.contains('is-open');
-    }
+    // Check whether the main submenu is currently open.
+    const isMainSubmenuOpen = () => submenu.classList.contains('is-open');
 
-    function lockPageScroll() {
+    // Find a submenu panel by its data-panel value.
+    const getPanelByName = (panelName) =>
+        panels.find((panel) => panel.dataset.panel === panelName) || null;
+
+    // Get all mobile submenu trigger elements.
+    const getMobileTriggers = () =>
+        [...document.querySelectorAll('.ff-mobile-menu-trigger')];
+
+    // Set the aria-expanded state and active class for a group of elements.
+    const setExpandedState = (elements, isExpanded) => {
+        // Loop through every element passed into the helper.
+        elements.forEach((element) => {
+            // Update the accessibility expanded state.
+            element.setAttribute('aria-expanded', String(isExpanded));
+
+            // Add or remove the active class based on the expanded state.
+            element.classList.toggle('is-active', isExpanded);
+        });
+    };
+
+    // Prevent the page from scrolling.
+    const lockPageScroll = () => {
+        // Do nothing if the page is already locked.
         if (isPageScrollLocked) return;
 
+        // Hide overflow on the root element and body to prevent scrolling.
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
+        // Store that the page is now scroll-locked.
         isPageScrollLocked = true;
-    }
+    };
 
-    function unlockPageScroll() {
+    // Allow the page to scroll again.
+    const unlockPageScroll = () => {
+        // Do nothing if the page is not currently locked.
         if (!isPageScrollLocked) return;
 
+        // Clear the overflow styles so the page can scroll normally again.
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
 
+        // Store that the page is no longer scroll-locked.
         isPageScrollLocked = false;
-    }
+    };
 
-    function updateBodyOverlayState() {
-        var hasOpenLocaleMenu = false;
+    // Update body, navbar, and scroll-lock state based on open menus.
+    const updateBodyOverlayState = () => {
+        // Check whether any locale menu is currently active.
+        const hasOpenLocaleMenu = localeMenus.some((menu) =>
+            menu.classList.contains('is-active')
+        );
 
-        for (var i = 0; i < localeMenus.length; i++) {
-            if (localeMenus[i].classList.contains('is-active')) {
-                hasOpenLocaleMenu = true;
-                break;
-            }
-        }
+        // The overlay should be open if the submenu or a locale menu is open.
+        const shouldBeOpen = isMainSubmenuOpen() || hasOpenLocaleMenu;
 
-        var shouldBeOpen = isMainSubmenuOpen() || hasOpenLocaleMenu;
+        // Add or remove the body overlay class.
+        document.body.classList.toggle('ff-submenu-open', shouldBeOpen);
 
+        // Add or remove the navbar content open class if the element exists.
+        navbarContent?.classList.toggle('ff-navbar-content--open', shouldBeOpen);
+
+        // Lock page scroll when an overlay is open.
         if (shouldBeOpen) {
-            document.body.classList.add('ff-submenu-open');
             lockPageScroll();
-
-            if (navbarContent) {
-                navbarContent.classList.add('ff-navbar-content--open');
-            }
         } else {
-            document.body.classList.remove('ff-submenu-open');
+            // Unlock page scroll when no overlay is open.
             unlockPageScroll();
-
-            if (navbarContent) {
-                navbarContent.classList.remove('ff-navbar-content--open');
-            }
         }
-    }
+    };
 
-    function closeLocaleMenus(exceptMenu) {
-        for (var i = 0; i < localeMenus.length; i++) {
-            if (exceptMenu && localeMenus[i] === exceptMenu) continue;
+    // Close all locale menus, optionally leaving one menu open.
+    const closeLocaleMenus = (exceptMenu = null) => {
+        // Loop through every locale menu.
+        localeMenus.forEach((menu) => {
+            // Skip the menu passed as the exception.
+            if (exceptMenu && menu === exceptMenu) return;
 
-            localeMenus[i].classList.remove('is-active');
+            // Remove the active state from the menu.
+            menu.classList.remove('is-active');
 
-            var toggle = localeMenus[i].querySelector('.w-dropdown-toggle');
-            if (toggle) {
-                toggle.setAttribute('aria-expanded', 'false');
-                toggle.classList.remove('w--open');
-            }
+            // Get the menu's dropdown toggle.
+            const toggle = menu.querySelector('.w-dropdown-toggle');
 
-            var list = localeMenus[i].querySelector('.w-dropdown-list');
-            if (list) {
-                list.classList.remove('w--open');
-            }
-        }
+            // Get the menu's dropdown list.
+            const list = menu.querySelector('.w-dropdown-list');
 
+            // Update the toggle accessibility state if the toggle exists.
+            toggle?.setAttribute('aria-expanded', 'false');
+
+            // Remove Webflow's open class from the toggle if it exists.
+            toggle?.classList.remove('w--open');
+
+            // Remove Webflow's open class from the dropdown list if it exists.
+            list?.classList.remove('w--open');
+        });
+
+        // Refresh the body overlay and scroll-lock state.
         updateBodyOverlayState();
-    }
+    };
 
-    function openLocaleMenu(menu) {
-        if (!menu) return;
+    // Reset all submenu panels, triggers, breadcrumbs, and the burger button.
+    const resetPanelsAndTriggers = () => {
+        // Remove the active state from every submenu panel.
+        panels.forEach((panel) => panel.classList.remove('is-active'));
 
-        var isInsideMobileSubmenu = !!menu.closest('.ff-submenu-bottom-menu');
+        // Mark all desktop triggers as collapsed and inactive.
+        setExpandedState(triggers, false);
 
-        if (!isInsideMobileSubmenu) {
-            closeMenu();
-        }
+        // Mark all mobile triggers as collapsed and inactive.
+        setExpandedState(getMobileTriggers(), false);
 
-        closeLocaleMenus(menu);
+        // Mark all breadcrumbs as collapsed and inactive.
+        setExpandedState(breadcrumbs, false);
 
-        menu.classList.add('is-active');
+        // Mark the burger button as collapsed if it exists.
+        burger?.setAttribute('aria-expanded', 'false');
 
-        var toggle = menu.querySelector('.w-dropdown-toggle');
-        if (toggle) {
-            toggle.setAttribute('aria-expanded', 'true');
-            toggle.classList.add('w--open');
-        }
+        // Remove the burger open class if the burger button exists.
+        burger?.classList.remove('is-open');
+    };
 
-        var list = menu.querySelector('.w-dropdown-list');
-        if (list) {
-            list.classList.add('w--open');
-        }
-
-        updateBodyOverlayState();
-    }
-
-    function toggleLocaleMenu(menu) {
-        if (!menu) return;
-
-        var isOpen = menu.classList.contains('is-active');
-
-        if (isOpen) {
-            closeLocaleMenus();
-        } else {
-            openLocaleMenu(menu);
-        }
-    }
-
-    function resetPanelsAndTriggers() {
-        for (var i = 0; i < panels.length; i++) {
-            panels[i].classList.remove('is-active');
-        }
-
-        for (var j = 0; j < triggers.length; j++) {
-            triggers[j].setAttribute('aria-expanded', 'false');
-            triggers[j].classList.remove('is-active');
-        }
-
-        var mobileTriggers = document.querySelectorAll('.ff-mobile-menu-trigger');
-        for (var k = 0; k < mobileTriggers.length; k++) {
-            mobileTriggers[k].setAttribute('aria-expanded', 'false');
-            mobileTriggers[k].classList.remove('is-active');
-        }
-
-        if (burger) {
-            burger.setAttribute('aria-expanded', 'false');
-            burger.classList.remove('is-open');
-        }
-
-        for (var l = 0; l < breadcrumbs.length; l++) {
-            breadcrumbs[l].setAttribute('aria-expanded', 'false');
-            breadcrumbs[l].classList.remove('is-active');
-        }
-    }
-
-    function closeMenu() {
+    // Close the main submenu.
+    const closeMenu = () => {
+        // Clear any existing close timer.
         if (closeMenuTimer) {
             window.clearTimeout(closeMenuTimer);
             closeMenuTimer = null;
         }
 
-        if (!submenu.classList.contains('is-open')) {
+        // If the submenu is already closed, reset state and stop.
+        if (!isMainSubmenuOpen()) {
             resetPanelsAndTriggers();
             updateBodyOverlayState();
             return;
         }
 
+        // Remove the class that visually opens the submenu.
         submenu.classList.remove('is-open');
+
+        // Refresh the body overlay and scroll-lock state.
         updateBodyOverlayState();
 
-        closeMenuTimer = window.setTimeout(function () {
-            if (!submenu.classList.contains('is-open')) {
+        // Wait for the closing transition before fully resetting internal states.
+        closeMenuTimer = window.setTimeout(() => {
+            // Only reset if the submenu has not reopened during the transition.
+            if (!isMainSubmenuOpen()) {
                 resetPanelsAndTriggers();
             }
 
+            // Clear the timer reference after it has finished.
             closeMenuTimer = null;
         }, submenuTransitionDuration);
-    }
+    };
 
-    function closeSubmenuOnMouseLeave(e) {
+    // Open a locale/language dropdown menu.
+    const openLocaleMenu = (menu) => {
+        // Do nothing if no menu was provided.
+        if (!menu) return;
+
+        // Check whether the locale menu is inside the mobile submenu area.
+        const isInsideMobileSubmenu = Boolean(menu.closest('.ff-submenu-bottom-menu'));
+
+        // Close the main submenu before opening desktop locale menus.
+        if (!isInsideMobileSubmenu) {
+            closeMenu();
+        }
+
+        // Close every other locale menu.
+        closeLocaleMenus(menu);
+
+        // Mark this locale menu as active.
+        menu.classList.add('is-active');
+
+        // Get the menu's dropdown toggle.
+        const toggle = menu.querySelector('.w-dropdown-toggle');
+
+        // Get the menu's dropdown list.
+        const list = menu.querySelector('.w-dropdown-list');
+
+        // Mark the dropdown toggle as expanded if it exists.
+        toggle?.setAttribute('aria-expanded', 'true');
+
+        // Add Webflow's open class to the toggle if it exists.
+        toggle?.classList.add('w--open');
+
+        // Add Webflow's open class to the dropdown list if it exists.
+        list?.classList.add('w--open');
+
+        // Refresh the body overlay and scroll-lock state.
+        updateBodyOverlayState();
+    };
+
+    // Toggle a locale/language dropdown menu open or closed.
+    const toggleLocaleMenu = (menu) => {
+        // Do nothing if no menu was provided.
+        if (!menu) return;
+
+        // Close all locale menus if this one is already open.
+        if (menu.classList.contains('is-active')) {
+            closeLocaleMenus();
+        } else {
+            // Otherwise, open this locale menu.
+            openLocaleMenu(menu);
+        }
+    };
+
+    // Close the submenu when the mouse leaves the submenu area on desktop.
+    const closeSubmenuOnMouseLeave = (event) => {
+        // Only run this behaviour on desktop.
         if (!isDesktop()) return;
 
-        var nextElement = e.relatedTarget;
+        // Get the element the mouse moved into.
+        const nextElement = event.relatedTarget;
 
+        // Close the menu if the mouse did not move into another element.
         if (!nextElement) {
             closeMenu();
             return;
         }
 
-        var movedInsideSubmenu = submenu.contains(nextElement);
-        var movedToTrigger = nextElement.closest && nextElement.closest('.ff-navbar-trigger');
-        var movedToLocaleMenu = nextElement.closest && nextElement.closest('.w-locales-list');
+        // Check whether the mouse moved to somewhere inside the submenu.
+        const movedInsideSubmenu = submenu.contains(nextElement);
 
+        // Check whether the mouse moved to a navbar trigger.
+        const movedToTrigger = nextElement.closest?.('.ff-navbar-trigger');
+
+        // Check whether the mouse moved to a locale menu.
+        const movedToLocaleMenu = nextElement.closest?.('.w-locales-list');
+
+        // Close the menu if the mouse moved outside all allowed navbar areas.
         if (!movedInsideSubmenu && !movedToTrigger && !movedToLocaleMenu) {
             closeMenu();
         }
-    }
+    };
 
-    function initPanelSwitchers(scope) {
-        var switchLinks = scope.querySelectorAll('[data-panel-switch]');
-        var contentPanels = scope.querySelectorAll('[data-panel-content]');
+    // Initialize internal panel switchers inside a submenu panel.
+    const initPanelSwitchers = (scope) => {
+        // Avoid attaching duplicate event listeners to the same panel.
+        if (scope.dataset.panelSwitchersInitialized === 'true') return;
 
+        // Get all links that switch between inner content panels.
+        const switchLinks = [...scope.querySelectorAll('[data-panel-switch]')];
+
+        // Get all inner content panels that can be switched.
+        const contentPanels = [...scope.querySelectorAll('[data-panel-content]')];
+
+        // Stop if the panel does not contain switch links or content panels.
         if (!switchLinks.length || !contentPanels.length) return;
 
-        function activatePanel(panelName) {
-            for (var i = 0; i < switchLinks.length; i++) {
-                var linkName = switchLinks[i].getAttribute('data-panel-switch');
-
-                if (linkName === panelName) {
-                    switchLinks[i].classList.add('is-active');
-                } else {
-                    switchLinks[i].classList.remove('is-active');
-                }
-            }
-
-            for (var j = 0; j < contentPanels.length; j++) {
-                var contentName = contentPanels[j].getAttribute('data-panel-content');
-
-                if (contentName === panelName) {
-                    contentPanels[j].style.display = 'block';
-                    contentPanels[j].classList.add('is-active');
-                } else {
-                    contentPanels[j].style.display = 'none';
-                    contentPanels[j].classList.remove('is-active');
-                }
-            }
-        }
-
-        for (var k = 0; k < switchLinks.length; k++) {
-            switchLinks[k].addEventListener('mouseenter', function () {
-                var panelName = this.getAttribute('data-panel-switch');
-                if (!panelName) return;
-                activatePanel(panelName);
+        // Activate the matching inner content panel.
+        const activatePanel = (panelName) => {
+            // Update active state on each switch link.
+            switchLinks.forEach((link) => {
+                // Mark the link as active if it matches the requested panel.
+                link.classList.toggle(
+                    'is-active',
+                    link.dataset.panelSwitch === panelName
+                );
             });
 
-            switchLinks[k].addEventListener('focus', function () {
-                var panelName = this.getAttribute('data-panel-switch');
-                if (!panelName) return;
-                activatePanel(panelName);
+            // Update visibility and active state on each content panel.
+            contentPanels.forEach((panel) => {
+                // Check whether this content panel matches the requested panel.
+                const isActive = panel.dataset.panelContent === panelName;
+
+                // Show the matching panel and hide the others.
+                panel.style.display = isActive ? 'block' : 'none';
+
+                // Add or remove the active class based on whether this panel matches.
+                panel.classList.toggle('is-active', isActive);
             });
-        }
+        };
 
-        if (switchLinks[0]) {
-            activatePanel(switchLinks[0].getAttribute('data-panel-switch'));
-        }
-    }
+        // Attach hover and focus handlers to every switch link.
+        switchLinks.forEach((link) => {
+            // Create a reusable handler for mouseenter and focus events.
+            const handlePanelSwitch = () => {
+                // Get the panel name from the link's data attribute.
+                const panelName = link.dataset.panelSwitch;
 
-    function openPanel(panelName) {
+                // Stop if there is no panel name.
+                if (!panelName) return;
+
+                // Activate the matching content panel.
+                activatePanel(panelName);
+            };
+
+            // Switch panels when the user hovers over the link.
+            link.addEventListener('mouseenter', handlePanelSwitch);
+
+            // Switch panels when the link receives keyboard focus.
+            link.addEventListener('focus', handlePanelSwitch);
+        });
+
+        // Activate the first switch link's panel by default.
+        activatePanel(switchLinks[0].dataset.panelSwitch);
+
+        // Mark this panel as initialized to prevent duplicate listeners later.
+        scope.dataset.panelSwitchersInitialized = 'true';
+    };
+
+    // Open a specific submenu panel by name.
+    const openPanel = (panelName) => {
+        // Stop if no panel name was provided.
+        if (!panelName) return null;
+
+        // Clear any pending close timer.
         if (closeMenuTimer) {
             window.clearTimeout(closeMenuTimer);
             closeMenuTimer = null;
         }
 
-        var panel = document.querySelector('.ff-submenu-panel[data-panel="' + panelName + '"]');
+        // Find the panel that matches the requested name.
+        const panel = getPanelByName(panelName);
+
+        // Stop if no matching panel exists.
         if (!panel) return null;
 
+        // Close any open locale menus.
         closeLocaleMenus();
 
-        for (var i = 0; i < panels.length; i++) {
-            panels[i].classList.remove('is-active');
-        }
+        // Remove the active state from all panels.
+        panels.forEach((item) => item.classList.remove('is-active'));
 
+        // Open the main submenu wrapper.
         submenu.classList.add('is-open');
+
+        // Mark the selected panel as active.
         panel.classList.add('is-active');
 
+        // Initialize switchers inside this panel if needed.
         initPanelSwitchers(panel);
+
+        // Refresh the body overlay and scroll-lock state.
         updateBodyOverlayState();
 
+        // Return the opened panel.
         return panel;
-    }
+    };
 
-    function openMenu(menuName, trigger) {
+    // Open a desktop menu from a navbar trigger.
+    const openMenu = (menuName, trigger) => {
+        // Reset the current active navbar state.
         resetPanelsAndTriggers();
-        closeLocaleMenus();
 
-        var panel = openPanel(menuName);
+        // Open the requested submenu panel.
+        const panel = openPanel(menuName);
+
+        // Stop if the requested panel could not be opened.
         if (!panel) return;
 
+        // Mark the trigger as expanded for accessibility.
         trigger.setAttribute('aria-expanded', 'true');
+
+        // Add the active state to the trigger.
         trigger.classList.add('is-active');
-    }
+    };
 
-    function openBurgerMenu() {
+    // Open the mobile burger menu.
+    const openBurgerMenu = () => {
+        // Reset the current active navbar state.
         resetPanelsAndTriggers();
-        closeLocaleMenus();
 
-        var panel = openPanel('mobile');
+        // Open the mobile submenu panel.
+        const panel = openPanel('mobile');
+
+        // Stop if the mobile panel could not be opened.
         if (!panel) return;
 
-        if (burger) {
-            burger.classList.add('is-open');
-            burger.setAttribute('aria-expanded', 'true');
-        }
+        // Add the open class to the burger button if it exists.
+        burger?.classList.add('is-open');
 
-        for (var i = 0; i < breadcrumbs.length; i++) {
-            breadcrumbs[i].classList.add('is-active');
-            breadcrumbs[i].setAttribute('aria-expanded', 'true');
-        }
-    }
+        // Mark the burger button as expanded if it exists.
+        burger?.setAttribute('aria-expanded', 'true');
 
-    for (var i = 0; i < triggers.length; i++) {
-        triggers[i].addEventListener('mouseenter', function () {
+        // Mark breadcrumbs as expanded and active.
+        setExpandedState(breadcrumbs, true);
+    };
+
+    // Attach event listeners to each desktop navbar trigger.
+    triggers.forEach((trigger) => {
+        // Open the menu on hover for desktop users.
+        trigger.addEventListener('mouseenter', () => {
+            // Ignore hover behaviour on tablet/mobile.
             if (!isDesktop()) return;
 
-            var menuName = this.getAttribute('data-menu');
-            openMenu(menuName, this);
+            // Open the menu connected to this trigger.
+            openMenu(trigger.dataset.menu, trigger);
         });
 
-        triggers[i].addEventListener('click', function (e) {
-            e.stopPropagation();
+        // Toggle the menu when the trigger is clicked.
+        trigger.addEventListener('click', (event) => {
+            // Prevent the click from bubbling to the document click handler.
+            event.stopPropagation();
 
-            var menuName = this.getAttribute('data-menu');
-            var panel = document.querySelector('.ff-submenu-panel[data-panel="' + menuName + '"]');
-            var isAlreadyOpen = panel &&
-                panel.classList.contains('is-active') &&
-                submenu.classList.contains('is-open');
+            // Get the menu name from the trigger's data-menu attribute.
+            const menuName = trigger.dataset.menu;
 
+            // Find the panel connected to this trigger.
+            const panel = getPanelByName(menuName);
+
+            // Check whether this trigger's panel is already active and open.
+            const isAlreadyOpen =
+                panel?.classList.contains('is-active') && isMainSubmenuOpen();
+
+            // Close the menu if the active panel was clicked again.
             if (isAlreadyOpen) {
                 closeMenu();
             } else {
-                openMenu(menuName, this);
+                // Otherwise, open the selected menu.
+                openMenu(menuName, trigger);
             }
         });
-    }
+    });
 
-    if (burger) {
-        burger.addEventListener('click', function (e) {
-            e.stopPropagation();
+    // Attach a click handler to the burger button if it exists.
+    burger?.addEventListener('click', (event) => {
+        // Prevent the click from bubbling to the document click handler.
+        event.stopPropagation();
+
+        // Close any open locale menus before toggling the burger menu.
+        closeLocaleMenus();
+
+        // Get the mobile submenu panel.
+        const mobilePanel = getPanelByName('mobile');
+
+        // Check whether the mobile menu is already active and open.
+        const isMobileMenuOpen =
+            mobilePanel?.classList.contains('is-active') && isMainSubmenuOpen();
+
+        // Close the mobile menu if it is already open.
+        if (isMobileMenuOpen) {
+            closeMenu();
+        } else {
+            // Otherwise, open the mobile burger menu.
+            openBurgerMenu();
+        }
+    });
+
+    // Attach click handlers to breadcrumbs.
+    breadcrumbs.forEach((breadcrumb) => {
+        // Reopen the main mobile menu when a breadcrumb is clicked.
+        breadcrumb.addEventListener('click', (event) => {
+            // Prevent the breadcrumb's default link behaviour.
+            event.preventDefault();
+
+            // Prevent the click from bubbling to the document click handler.
+            event.stopPropagation();
+
+            // Close any open locale menus.
             closeLocaleMenus();
 
-            var mobilePanel = document.querySelector('.ff-submenu-panel[data-panel="mobile"]');
-            var isMobileMenuOpen = mobilePanel &&
-                mobilePanel.classList.contains('is-active') &&
-                submenu.classList.contains('is-open');
-
-            if (isMobileMenuOpen) {
-                closeMenu();
-            } else {
-                openBurgerMenu();
-            }
-        });
-    }
-
-    for (var m = 0; m < breadcrumbs.length; m++) {
-        breadcrumbs[m].addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            closeLocaleMenus();
+            // Open the mobile burger menu.
             openBurgerMenu();
         });
-    }
+    });
 
-    for (var n = 0; n < localeMenus.length; n++) {
-        (function (menu) {
-            var toggle = menu.querySelector('.w-dropdown-toggle');
-            var list = menu.querySelector('.w-dropdown-list');
+    // Attach event listeners to each locale/language menu.
+    localeMenus.forEach((menu) => {
+        // Get the locale menu's dropdown toggle.
+        const toggle = menu.querySelector('.w-dropdown-toggle');
 
-            if (!toggle) return;
+        // Get the locale menu's dropdown list.
+        const list = menu.querySelector('.w-dropdown-list');
 
-            menu.addEventListener('mouseenter', function () {
-                if (isDesktop()) {
-                    openLocaleMenu(menu);
-                }
-            });
+        // Stop if the menu does not have a toggle.
+        if (!toggle) return;
 
-            toggle.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleLocaleMenu(menu);
-            });
-
-            if (list) {
-                list.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                });
+        // Open the locale menu on hover for desktop users.
+        menu.addEventListener('mouseenter', () => {
+            // Only use hover behaviour on desktop.
+            if (isDesktop()) {
+                openLocaleMenu(menu);
             }
-        })(localeMenus[n]);
-    }
+        });
 
+        // Toggle the locale menu when its toggle is clicked.
+        toggle.addEventListener('click', (event) => {
+            // Prevent the default dropdown behaviour.
+            event.preventDefault();
+
+            // Prevent the click from bubbling to the document click handler.
+            event.stopPropagation();
+
+            // Toggle this locale menu open or closed.
+            toggleLocaleMenu(menu);
+        });
+
+        // Prevent clicks inside the dropdown list from closing the menu.
+        list?.addEventListener('click', (event) => {
+            // Stop dropdown-list clicks from bubbling upward.
+            event.stopPropagation();
+        });
+    });
+
+    // Close the submenu when the mouse leaves it on desktop.
     submenu.addEventListener('mouseleave', closeSubmenuOnMouseLeave);
 
-    submenu.addEventListener('click', function (e) {
-        var mobileTrigger = e.target.closest('.ff-mobile-menu-trigger');
+    // Handle clicks inside the submenu.
+    submenu.addEventListener('click', (event) => {
+        // Check whether the clicked item is a mobile submenu trigger.
+        const mobileTrigger = event.target.closest('.ff-mobile-menu-trigger');
 
+        // Handle mobile submenu trigger clicks.
         if (mobileTrigger) {
-            e.stopPropagation();
+            // Prevent the click from bubbling to the document click handler.
+            event.stopPropagation();
 
-            var menuName = mobileTrigger.getAttribute('data-menu');
+            // Get the target menu name from the mobile trigger.
+            const menuName = mobileTrigger.dataset.menu;
+
+            // Stop if no menu name exists.
             if (!menuName) return;
 
+            // Close any open locale menus.
             closeLocaleMenus();
+
+            // Open the selected submenu panel.
             openPanel(menuName);
+
+            // Stop running the rest of the submenu click handler.
             return;
         }
 
-        e.stopPropagation();
+        // Prevent general submenu clicks from closing the menu.
+        event.stopPropagation();
     });
 
-    document.addEventListener('click', function (e) {
-        var clickedTrigger = e.target.closest('.ff-navbar-trigger');
-        var clickedInsideSubmenu = submenu.contains(e.target);
-        var clickedBurger = burger && burger.contains(e.target);
-        var clickedMobileTrigger = e.target.closest('.ff-mobile-menu-trigger');
-        var clickedBreadcrumb = e.target.closest('.ff-navbar .breadcrumb');
-        var clickedLocaleMenu = e.target.closest('.w-locales-list');
+    // Handle clicks anywhere in the document.
+    document.addEventListener('click', (event) => {
+        // Check whether the click happened on a desktop navbar trigger.
+        const clickedTrigger = event.target.closest('.ff-navbar-trigger');
 
+        // Check whether the click happened inside the submenu.
+        const clickedInsideSubmenu = submenu.contains(event.target);
+
+        // Check whether the click happened on the burger button.
+        const clickedBurger = burger?.contains(event.target);
+
+        // Check whether the click happened on a mobile submenu trigger.
+        const clickedMobileTrigger = event.target.closest('.ff-mobile-menu-trigger');
+
+        // Check whether the click happened on a navbar breadcrumb.
+        const clickedBreadcrumb = event.target.closest('.ff-navbar .breadcrumb');
+
+        // Check whether the click happened inside a locale menu.
+        const clickedLocaleMenu = event.target.closest('.w-locales-list');
+
+        // Close locale menus when clicking outside them.
         if (!clickedLocaleMenu) {
             closeLocaleMenus();
         }
 
-        if (!isDesktop()) {
-            if (!clickedTrigger && !clickedInsideSubmenu && !clickedBurger && !clickedBreadcrumb && !clickedMobileTrigger) {
-                closeMenu();
-            }
+        // On mobile/tablet, close the submenu when clicking outside navbar elements.
+        if (
+            !isDesktop() &&
+            !clickedTrigger &&
+            !clickedInsideSubmenu &&
+            !clickedBurger &&
+            !clickedBreadcrumb &&
+            !clickedMobileTrigger
+        ) {
+            closeMenu();
         }
     });
-}
+};
